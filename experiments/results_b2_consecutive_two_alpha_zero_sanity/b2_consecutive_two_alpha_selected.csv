@@ -1,0 +1,3 @@
+exp,X,n,selected_pair_alpha,selected_exclusion_alpha,selected_bits_per_gap,selected_delta_vs_B1_bits_per_gap,oracle_pair_alpha,oracle_exclusion_alpha,oracle_bits_per_gap,oracle_delta_vs_B1_bits_per_gap,B1_bits_per_gap
+14.0,16384.0,1612.0,0.0,0.0,2.1034336493683,0.0,0.0,0.0,2.1034336493683,0.0,2.1034336493683
+15.0,32768.0,3030.0,0.0,0.0,2.22688171530662,0.0,0.0,0.0,2.22688171530662,0.0,2.22688171530662

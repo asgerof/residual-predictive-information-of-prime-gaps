@@ -1,0 +1,489 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260617001514
+Username: LAPTOP-L5HBDR7O\asger
+RunAs User: LAPTOP-L5HBDR7O\asger
+Configuration Name: 
+Machine: LAPTOP-L5HBDR7O (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Asger\CursorProjects\Residual Predictive Information of Prime Gaps\experiments\run_paper_suite_x26_n200.ps1 -MaxExp 26 -Nulls 200
+Process ID: 16804
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Paper suite started at 2026-06-17T00:15:14.2990788+02:00
+max_exp=26 nulls=200
+{
+  "kind": "b1_stop_time",
+  "description": "B1(11) bucket residual, stop-time nulls",
+  "max_exp": 26,
+  "nulls": 200,
+  "estimated_seconds": 33337.75676983611,
+  "estimated_minutes": 555.6292794972685,
+  "estimated_hours": 9.260487991621142,
+  "estimated_latest_window_gaps": 3631232
+}
+{
+  "kind": "ctw_rank64_stop_time",
+  "description": "rank-mod-64 CTW ladder, stop-time nulls",
+  "max_exp": 26,
+  "nulls": 200,
+  "estimated_seconds": 44733.45221058956,
+  "estimated_minutes": 745.5575368431594,
+  "estimated_hours": 12.425958947385988,
+  "estimated_latest_window_gaps": 3631232
+}
+checkpointed 1/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 2/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 3/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 4/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 5/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 6/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 7/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 8/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 9/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1_
+null_checkpoint.csv
+checkpointed 10/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 11/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 12/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 13/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 14/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 15/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 16/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 17/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 18/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 19/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 20/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 21/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 22/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 23/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 24/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 25/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 26/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 27/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 28/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 29/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 30/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 31/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 32/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 33/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 34/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 35/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 36/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 37/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 38/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 39/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 40/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 41/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 42/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 43/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 44/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 45/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 46/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 47/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 48/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 49/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 50/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 51/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 52/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 53/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 54/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 55/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 56/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 57/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 58/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 59/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 60/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 61/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 62/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 63/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 64/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 65/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 66/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 67/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 68/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 69/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 70/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 71/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 72/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 73/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 74/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 75/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 76/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 77/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 78/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 79/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 80/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 81/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 82/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 83/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 84/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 85/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 86/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 87/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 88/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 89/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 90/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 91/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 92/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 93/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 94/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 95/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 96/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 97/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 98/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 99/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u1
+_null_checkpoint.csv
+checkpointed 100/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 101/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 102/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 103/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 104/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 105/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 106/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 107/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 108/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 109/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 110/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 111/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 112/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 113/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 114/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 115/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 116/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 117/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 118/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 119/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 120/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 121/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 122/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 123/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 124/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 125/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 126/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 127/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 128/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 129/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 130/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 131/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 132/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 133/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 134/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 135/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 136/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 137/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 138/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 139/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 140/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 141/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 142/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 143/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 144/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 145/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 146/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 147/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 148/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 149/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 150/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 151/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 152/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 153/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 154/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 155/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 156/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 157/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 158/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 159/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 160/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 161/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 162/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 163/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 164/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 165/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 166/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 167/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 168/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 169/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 170/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 171/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 172/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 173/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 174/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 175/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 176/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 177/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 178/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 179/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 180/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 181/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 182/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 183/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 184/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 185/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 186/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 187/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 188/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 189/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 190/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 191/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 192/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 193/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 194/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 195/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 196/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 197/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 198/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 199/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+checkpointed 200/200 nulls to experiments\paper_b1_y11_depth4_stop_time_x26_n200\b1_u
+1_null_checkpoint.csv
+{
+  "min_exp": 12,
+  "max_exp": 26,
+  "train_windows": 3,
+  "y": 11,
+  "W": 2310,
+  "phi_W": 480,
+  "depth": 4,
+  "bucket_edges": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    4.0,
+    4.5,
+    5.0,
+    5.5,
+    6.0,
+    6.5,
+    7.0,
+    7.5,
+    8.0,
+    Infinity
+  ],
+  "nulls": 200,
+  "null_mode": "stop-time",
+  "checkpoint_nulls": true,
+  "checkpoint_file": "b1_u1_null_checkpoint.csv",
+  "seed": 20260616
+}
+
+exp,X,n,R_bits_per_gap,null_mean,null_sd,z_vs_null,B1_exact_bits_per_gap,U1_exact_bit
+s_per_gap
+15,32768,3030,-0.000330,-0.000329,0.000004,-0.30,2.226882,2.227212
+16,65536,5709,-0.000175,-0.000175,0.000002,-0.16,2.340799,2.340974
+17,131072,10749,-0.000093,-0.000093,0.000001,-0.19,2.451311,2.451404
+18,262144,20390,-0.000049,-0.000049,0.000000,-0.01,2.548242,2.548292
+19,524288,38635,-0.000026,-0.000026,0.000000,-0.21,2.645104,2.645130
+20,1048576,73586,-0.000014,-0.000014,0.000000,0.05,2.731674,2.731687
+21,2097152,140336,-0.000007,-0.000007,0.000000,-0.10,2.814953,2.814960
+22,4194304,268216,-0.000004,-0.000004,0.000000,-0.15,2.893612,2.893616
+23,8388608,513708,-0.000002,-0.000002,0.000000,-0.14,2.967942,2.967944
+24,16777216,985818,-0.000001,-0.000001,0.000000,0.10,3.038313,3.038314
+25,33554432,1894120,-0.000001,-0.000001,0.000000,-0.21,3.106092,3.106092
+26,67108864,3645744,-0.000000,-0.000000,0.000000,-0.32,3.170428,3.170429

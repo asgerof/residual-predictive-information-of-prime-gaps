@@ -1,0 +1,519 @@
+# Residual Predictive Information of Prime Gaps
+
+## 1. Formål
+
+Denne teori undersøger ikke, om primtal er komprimerbare i absolut forstand. Det er de trivielt, fordi primtal kan genereres algoritmisk.
+
+Teorien undersøger i stedet følgende spørgsmål:
+
+> Findes der målbar sekventiel information i prime-gap-sekvensen, efter kendt lokal og global aritmetisk struktur er indbygget i en nulmodel?
+
+Med andre ord:
+
+> Kan prime gaps forudsiges bedre end af en stærk aritmetisk nulmodel, uden at modellen bruger primalitetstest, fremtidige gaps eller skjult rekonstruktion af primtal?
+
+Hvis svaret er nej, understøtter det idéen om, at kendt aritmetisk struktur plus en passende random-sieve-model udtømmer den statistiske information i prime gaps.
+
+Hvis svaret er ja, findes der residual sekventiel struktur i prime gaps, som ikke forklares af de indbyggede nulmodeller.
+
+---
+
+## 2. Objektet
+
+Lad primtallene være
+
+[
+p_1,p_2,p_3,\ldots
+]
+
+og lad prime gaps være
+
+[
+g_i=p_{i+1}-p_i.
+]
+
+For et dyadisk vindue defineres
+
+[
+G_X=(g_i)_{X\leq p_i<2X}.
+]
+
+Vi arbejder lokalt i vinduet ([X,2X]), fordi den typiske gap-størrelse ændrer sig med skalaen. Den naturlige første normalisering er
+
+[
+\tilde g_i=\frac{g_i}{\log p_i}.
+]
+
+Alle modeller må kende den lokale skala (\log p_i).
+
+---
+
+## 3. Prequential kode-længde
+
+En online-model (M) tildeler sandsynligheder til næste gap ud fra den tilladte historik før gap’et observeres.
+
+Lad
+
+[
+H_i
+]
+
+være den information, modellen må bruge før (g_i) observeres.
+
+Den prequentiale kode-længde for (G_X) under (M) defineres som
+
+[
+L_M(G_X)
+========
+
+\sum_{i:X\leq p_i<2X}
+-\log_2 M(g_i\mid H_i).
+]
+
+Den gennemsnitlige kode-længde pr. gap er
+
+[
+h_M(X)=\frac{L_M(G_X)}{|G_X|}.
+]
+
+En model er bedre, hvis den opnår lavere kode-længde på fremtidige gaps uden at bruge ulovlig information.
+
+---
+
+## 4. Tilladt information
+
+En tilladt model må bruge:
+
+* tidligere gaps
+* normaliserede tidligere gaps
+* lokal skala (\log p_i)
+* restklasseinformation modulo udvalgte små primtal
+* begrænsede lokale mønstre
+* parametre estimeret på tidligere vinduer
+
+En tilladt model må ikke bruge:
+
+* primalitetstest som oracle
+* direkte sigtning op til (X)
+* fremtidige gaps
+* et kodet opslag over den konkrete gap-sekvens
+* en regel, der i praksis rekonstruerer primtallene
+
+Denne begrænsning er afgørende. Teorien handler ikke om, hvorvidt primtal kan genereres, men om hvorvidt gap-sekvensen indeholder residual sekventiel information relativt til en specificeret aritmetisk baseline.
+
+---
+
+## 5. Baseline-hierarki
+
+Teorien kræver ikke én absolut nulmodel, men et hierarki af nulmodeller.
+
+### (B_0): Lokal densitetsmodel
+
+Denne model bruger kun den lokale primtalstæthed omkring (X), omtrent
+
+[
+\frac{1}{\log X}.
+]
+
+Efter primtallet 2 modelleres gaps på de tilladte ulige positioner som en lokal geometrisk eller eksponentiel proces.
+
+Denne baseline repræsenterer:
+
+> primtal som lokal tilfældighed med korrekt gennemsnitlig tæthed.
+
+---
+
+### (B_1(y)): Wheel-korrigeret model
+
+Lad
+
+[
+W_y=\prod_{q\leq y}q.
+]
+
+Modellen kender de restklasser modulo (W_y), hvor primtal større end (y) overhovedet kan ligge.
+
+Denne baseline fjerner struktur, som skyldes små modulus-forbud.
+
+Den repræsenterer:
+
+> lokal tilfældighed efter fjernelse af åbenlyse divisibilitetsmønstre.
+
+---
+
+### (B_2(y,r)): Lokal tuple-korrigeret model
+
+Denne model indbygger ikke kun enkeltstående wheel-forbud, men også kendte lokale korrektioner for små mønstre af primtal.
+
+Parameteren (y) styrer, hvor mange små primtal/moduli modellen kender.
+
+Parameteren (r) styrer, hvor lange lokale gap- eller tuple-mønstre modellen korrigerer for.
+
+Denne baseline repræsenterer:
+
+> kendt lokal aritmetisk struktur op til en kontrolleret kompleksitet.
+
+---
+
+### (B_3(y,r,z)): Globalt analytisk korrigeret model
+
+En stærkere baseline bør også tillade globale korrektioner, der afspejler kendte udsving i primtalstællefunktionen.
+
+Parameteren (z) styrer styrken af den globale korrektion.
+
+Denne baseline repræsenterer:
+
+> lokal density-, wheel- og tuple-struktur plus kendte globale analytiske udsving.
+
+Det er først efter sammenligning med en stærk (B_3)-type baseline, at en residual effekt bør betragtes som dybt interessant.
+
+---
+
+## 6. Strukturmodellen
+
+Lad (\mathcal A_k) være en klasse af tilladte online-modeller, der må bruge samme aritmetiske information som baseline (B_k), men som også må forsøge at lære ekstra sekventielle mønstre i gap-historikken.
+
+For at undgå overfitting bruges ikke et rent infimum over modeller uden straf. I stedet bruges en universal eller penaliseret kode:
+
+[
+L_{U_k}(G_X),
+]
+
+hvor (U_k) er en universal online-kode over modelklassen (\mathcal A_k).
+
+Det betyder, at modellen skal betale for sin egen kompleksitet. En lavere kode-længde tæller kun som reel struktur, hvis gevinsten overstiger den ekstra beskrivelsesomkostning.
+
+---
+
+## 7. Residual predictive information
+
+For baseline-niveau (k) defineres den residuale predictive information i vinduet ([X,2X]) som
+
+[
+R_k(X)
+======
+
+\frac{
+L_{B_k}(G_X)-L_{U_k}(G_X)
+}
+{|G_X|}.
+]
+
+Dette måler antal sparede bits pr. gap ved at bruge den bedste tilladte residuale sekvensmodel frem for den aritmetiske nulmodel.
+
+Hvis
+
+[
+R_k(X)\approx 0,
+]
+
+finder modellen ingen residual sekventiel information ud over baseline.
+
+Hvis
+
+[
+R_k(X)>0
+]
+
+stabilt og robust, findes der målbar sekventiel struktur, som baseline (B_k) ikke forklarer.
+
+---
+
+## 8. Asymptotisk spørgsmål
+
+Det centrale spørgsmål er ikke blot, om (R_k(X)>0) for et bestemt endeligt vindue.
+
+Det centrale spørgsmål er, om der findes en asymptotisk residual informationsdensitet:
+
+[
+\rho_k
+======
+
+\lim_{X\to\infty}R_k(X).
+]
+
+Dernæst spørges, hvad der sker, når baseline-hierarkiet styrkes:
+
+[
+\rho_\infty
+===========
+
+\lim_{k\to\infty}\rho_k.
+]
+
+Den stærke residuale hypotese er:
+
+[
+\rho_\infty>0.
+]
+
+Den svage residuale hypotese er:
+
+[
+\rho_\infty
+]
+
+eksisterer, men kan være nul.
+
+Den svage hypotese er vigtig, fordi et resultat
+
+[
+\rho_\infty=0
+]
+
+stadig ville være matematisk meningsfuldt. Det ville sige, at når kendt aritmetisk struktur indbygges i nulmodellen, er prime gaps informationsmæssigt uadskillelige fra den bedste tilladte aritmetiske random-model.
+
+---
+
+## 9. Resonanszoner
+
+En lokal version defineres på logaritmiske vinduer
+
+[
+[e^u,e^{u+\Delta}].
+]
+
+Lad
+
+[
+R_k(u,\Delta)
+]
+
+være residual predictive information i dette mindre vindue.
+
+En residual resonanszone er et område, hvor
+
+[
+R_k(u,\Delta)
+]
+
+er signifikant højere end forventet under syntetiske nulsekvenser genereret fra (B_k).
+
+En resonanszone er kun interessant, hvis den:
+
+1. overlever lokal densitetskorrektion
+2. overlever wheel-korrektion
+3. overlever tuple-korrektion
+4. overlever global analytisk korrektion
+5. genfindes på flere skalaer
+6. er robust over for forskellige kodninger
+7. ikke opstår tilsvarende i syntetiske nulmodeller
+
+Dermed er resonanszoner ikke i sig selv evidens. De er kun evidens, hvis de overlever et hierarki af forklaringer.
+
+---
+
+## 10. Residual afhængighed frem for krumning
+
+Den oprindelige idé om et krumningsfelt kan bruges som diagnostisk værktøj, men bør ikke være teoriens centrale invariant.
+
+Det centrale objekt bør være residual afhængighed:
+
+[
+I_B(g_i;H_i),
+]
+
+altså hvor meget information historikken (H_i) giver om næste gap (g_i), efter baseline (B) er indbygget.
+
+I praksis måles dette via kodegevinst:
+
+[
+R_k(X)
+======
+
+\frac{
+L_{B_k}(G_X)-L_{U_k}(G_X)
+}
+{|G_X|}.
+]
+
+Krumning kan stadig defineres som en sekundær diagnostik.
+
+Lad
+
+[
+e_i=g_i-\mathbb E_{B_k}[g_i\mid H_i].
+]
+
+Da kan en residual anden-differens defineres som
+
+[
+\kappa_i^{res}
+==============
+
+\frac{e_{i+2}-2e_{i+1}+e_i}{\log p_i}.
+]
+
+Men denne størrelse bør bruges til at lokalisere og visualisere afvigelser, ikke som teoriens primære fundament.
+
+---
+
+## 11. Falsifikation
+
+Den stærke hypotese svækkes eller falsificeres, hvis:
+
+* (R_k(X)\to 0) for stærkere baseline-niveauer
+* effekten forsvinder ved alternative kodninger
+* effekten kun findes for én modelklasse
+* effekten også findes i syntetiske nulsekvenser
+* effekten skyldes små modulus-strukturer
+* resonanszoner følger primorial-/wheel-mønstre og forsvinder efter korrektion
+* gevinsten ikke overlever penaliseret/universal kodning
+* gevinsten ikke overlever out-of-sample test på fremtidige vinduer
+
+Dette er en styrke ved teorien: den kan dø.
+
+---
+
+## 12. Evidensniveauer
+
+### Svag evidens
+
+Prime gaps komprimeres bedre end shufflet gap-data.
+
+Dette er ikke nok, fordi marginalfordeling, små moduli og lokale frekvenser kan forklare effekten.
+
+### Moderat evidens
+
+Kodegevinsten overlever kontrol for marginalfordeling og lokale gap-frekvenser.
+
+### Stærk evidens
+
+Kodegevinsten overlever wheel-korrektion.
+
+### Meget stærk evidens
+
+Kodegevinsten overlever tuple-/singular-series-korrektion.
+
+### Radikal evidens
+
+Der findes en positiv asymptotisk residual informationsdensitet
+
+[
+\rho_\infty>0
+]
+
+som er robust på tværs af:
+
+* vinduesstørrelser
+* skalaer (X)
+* kodninger
+* modelklasser
+* syntetiske nulmodeller
+* baseline-hierarkier
+
+---
+
+## 13. Den skarpeste konjektur
+
+### Residual Predictive Information Conjecture for Prime Gaps
+
+Lad
+
+[
+G_X=(p_{i+1}-p_i)_{X\leq p_i<2X}
+]
+
+være prime-gap-sekvensen i det dyadiske vindue ([X,2X]).
+
+Lad
+
+[
+B_k
+]
+
+være et hierarki af aritmetiske nulmodeller, hvor stigende (k) indbygger:
+
+1. lokal primtalstæthed
+2. wheel-struktur
+3. lokale tuple-korrektioner
+4. globale analytiske korrektioner
+
+Lad
+
+[
+U_k
+]
+
+være en universal online-kode over admissible sekvensmodeller, som må bruge samme aritmetiske information som (B_k), men ikke primalitetstest, sigtning, fremtidige gaps eller opslag over den konkrete sekvens.
+
+Definér
+
+[
+R_k(X)
+======
+
+\frac{
+L_{B_k}(G_X)-L_{U_k}(G_X)
+}
+{|G_X|}.
+]
+
+Hvis grænserne findes, definér
+
+[
+\rho_k=\lim_{X\to\infty}R_k(X)
+]
+
+og
+
+[
+\rho_\infty=\lim_{k\to\infty}\rho_k.
+]
+
+Den stærke konjektur er:
+
+[
+\rho_\infty>0.
+]
+
+Den svage konjektur er:
+
+[
+\rho_\infty
+]
+
+eksisterer.
+
+Hvis den stærke konjektur er sand, findes der residual sekventiel information i prime gaps, som ikke forklares af kendt aritmetisk struktur.
+
+Hvis den svage konjektur er sand med
+
+[
+\rho_\infty=0,
+]
+
+understøtter det, at kendte aritmetiske korrektioner plus en passende random-sieve-model udtømmer den statistiske struktur i prime gaps.
+
+---
+
+## 14. Eksperimentelt program
+
+Et første eksperiment bør følge denne protokol:
+
+1. Generér prime gaps i dyadiske vinduer ([X,2X]).
+2. Normalisér gaps efter lokal skala.
+3. Implementér baseline (B_0), (B_1), (B_2) og eventuelt (B_3).
+4. Implementér en penaliseret universal online-model (U_k).
+5. Træn kun på tidligere vinduer.
+6. Test kun på fremtidige vinduer.
+7. Mål kode-længde pr. gap.
+8. Sammenlign med syntetiske nulsekvenser fra samme baseline.
+9. Undersøg om (R_k(X)) falder mod nul, stabiliserer sig positivt eller forsvinder ved stærkere baseline.
+10. Kortlæg eventuelle lokale resonanszoner og test, om de overlever baseline-hierarkiet.
+
+Det afgørende spørgsmål er ikke, om man kan finde mønstre i prime gaps.
+
+Det afgørende spørgsmål er:
+
+> Overlever mønstret den bedste aritmetiske nulmodel og en fair out-of-sample kode-test?
+
+---
+
+## 15. Teoriens kerne
+
+Den endelige kerne kan formuleres sådan:
+
+> Prime gaps kan undersøges via residual predictive information: den per-gap kodegevinst, en tilladt online-model opnår over en stærk aritmetisk nulmodel. Hvis denne gevinst forsvinder, er prime gaps informationsmæssigt udtømt af kendt lokal og global aritmetik. Hvis gevinsten stabiliserer sig positivt, findes der residual sekventiel struktur i primtallene, som ikke reduceres til kendte wheel-, tuple- eller analytiske korrektioner.
+
+Denne formulering gør teorien testbar, falsificerbar og matematisk renere end en generel påstand om strukturel entropi.

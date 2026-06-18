@@ -1,0 +1,24 @@
+{
+  "min_exp": 12,
+  "max_exp": 18,
+  "train_windows": 3,
+  "b1_y": 11,
+  "tuple_y": 11,
+  "ie_order": 1,
+  "max_rank": 64,
+  "max_correction_rank": 8,
+  "pair_grid": [
+    0.0,
+    0.015625,
+    0.03125,
+    0.0625,
+    0.125
+  ],
+  "exclusion_grid": [
+    0.0,
+    0.015625,
+    0.03125,
+    0.0625,
+    0.125
+  ]
+}

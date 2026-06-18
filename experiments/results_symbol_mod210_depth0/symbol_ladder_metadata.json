@@ -1,0 +1,23 @@
+{
+  "min_exp": 12,
+  "max_exp": 20,
+  "train_windows": 3,
+  "symbol_mod": 210,
+  "depth": 0,
+  "nulls": 12,
+  "seed": 20260616,
+  "baselines": [
+    {
+      "label": "B0",
+      "y": 2,
+      "W": 2,
+      "phi_W": 1
+    },
+    {
+      "label": "B1(11)",
+      "y": 11,
+      "W": 2310,
+      "phi_W": 480
+    }
+  ]
+}

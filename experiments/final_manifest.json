@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "description": "Pinned artifacts for the compact final report. Paths are relative to experiments/.",
+  "artifacts": {
+    "b1_bucket": {
+      "name": "B1 bucket residual",
+      "path": "results_b1_y11_depth4_pilot/b1_u1_real_vs_null.csv",
+      "metadata_path": "results_b1_y11_depth4_pilot/b1_u1_metadata.json",
+      "required": true
+    },
+    "b1_bucket_stop_time": {
+      "name": "B1 bucket residual stop-time null",
+      "path": "results_b1_y11_depth4_stop_time/b1_u1_real_vs_null.csv",
+      "metadata_path": "results_b1_y11_depth4_stop_time/b1_u1_metadata.json",
+      "required": false
+    },
+    "baseline_ladder": {
+      "name": "B0/B1 baseline ladder",
+      "path": "results_ladder_b0_b1_y11/baseline_ladder.csv",
+      "metadata_path": "results_ladder_b0_b1_y11/baseline_ladder_metadata.json",
+      "required": true
+    },
+    "symbol_depth1": {
+      "name": "gap_mod_210 depth 1",
+      "path": "results_symbol_mod210_depth1/symbol_ladder.csv",
+      "metadata_path": "results_symbol_mod210_depth1/symbol_ladder_metadata.json",
+      "required": true
+    },
+    "ctw_rank64": {
+      "name": "rank_mod_64 CTW",
+      "path": "results_ctw_rank64_depth1/ctw_symbol_ladder.csv",
+      "metadata_path": "results_ctw_rank64_depth1/ctw_symbol_ladder_metadata.json",
+      "required": true
+    },
+    "ctw_rank64_stop_time": {
+      "name": "rank_mod_64 CTW stop-time null",
+      "path": "results_ctw_rank64_depth1_stop_time/ctw_symbol_ladder.csv",
+      "metadata_path": "results_ctw_rank64_depth1_stop_time/ctw_symbol_ladder_metadata.json",
+      "required": false
+    },
+    "pair_alpha": {
+      "name": "B2 pair alpha scan",
+      "path": "results_b2_pair_alpha_scan_y11/b2_pair_alpha_selected.csv",
+      "metadata_path": "results_b2_pair_alpha_scan_y11/b2_pair_alpha_metadata.json",
+      "required": true
+    },
+    "transition_mod30": {
+      "name": "transition mod 30 lambda 0.01",
+      "path": "results_transition_mod30_lam001/transition_calibration.csv",
+      "metadata_path": "results_transition_mod30_lam001/transition_calibration_metadata.json",
+      "required": true
+    },
+    "consecutive_alpha": {
+      "name": "B2 consecutive alpha scan",
+      "path": "results_b2_consecutive_alpha_scan_y11_r2/b2_consecutive_alpha_selected.csv",
+      "metadata_path": "results_b2_consecutive_alpha_scan_y11_r2/b2_consecutive_alpha_metadata.json",
+      "required": true
+    },
+    "consecutive_two_alpha": {
+      "name": "B2 consecutive two-alpha scan",
+      "path": "results_b2_consecutive_two_alpha_scan_y11_r2/b2_consecutive_two_alpha_selected.csv",
+      "metadata_path": "results_b2_consecutive_two_alpha_scan_y11_r2/b2_consecutive_two_alpha_metadata.json",
+      "required": true
+    },
+    "consecutive_two_alpha_head8": {
+      "name": "B2 consecutive two-alpha head-8 sensitivity",
+      "path": "results_b2_consecutive_two_alpha_scan_y11_r1_head8/b2_consecutive_two_alpha_selected.csv",
+      "metadata_path": "results_b2_consecutive_two_alpha_scan_y11_r1_head8/b2_consecutive_two_alpha_metadata.json",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "min_exp": 12,
+  "max_exp": 18,
+  "train_windows": 3,
+  "y": 11,
+  "W": 2310,
+  "phi_W": 480,
+  "mod": 30,
+  "transition_lambda": 0.1,
+  "symbol": "next_unit_residue_mod_30",
+  "residual_depth": 1
+}
