@@ -35,6 +35,25 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(f))
 
 
+def normalize_newlines(text: str) -> str:
+    return text.replace("\r\n", "\n").replace("\r", "\n")
+
+
+def write_text_if_changed(path: Path, text: str) -> None:
+    """Write only when content differs after newline normalization.
+
+    This keeps CI stable on Windows checkouts where Git may have materialized
+    committed text files with CRLF line endings before Python regenerates them
+    with LF line endings.
+    """
+
+    if path.exists():
+        current = path.read_text(encoding="utf-8")
+        if normalize_newlines(current) == normalize_newlines(text):
+            return
+    path.write_text(text, encoding="utf-8", newline="\n")
+
+
 def as_float(row: dict[str, str], key: str) -> float:
     return float(row[key])
 
@@ -386,10 +405,11 @@ def render_report(metrics: dict[str, Any]) -> str:
 
 def main() -> None:
     metrics = collect_metrics()
-    (ROOT / "final_metrics.json").write_text(
-        json.dumps(metrics, indent=2), encoding="utf-8"
+    write_text_if_changed(
+        ROOT / "final_metrics.json",
+        json.dumps(metrics, indent=2),
     )
-    (ROOT / "final_report.md").write_text(render_report(metrics), encoding="utf-8")
+    write_text_if_changed(ROOT / "final_report.md", render_report(metrics))
     print(json.dumps(metrics["conclusion"] if metrics.get("ok") else metrics, indent=2))
 
 
