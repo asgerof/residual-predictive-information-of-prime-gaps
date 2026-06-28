@@ -52,10 +52,11 @@ Paper-facing files:
 - `paper_grade_theory.md`: theory note updated for the completed paper-scale
   result.
 - `paper_tables.md`: paper-ready result tables.
-- `experiments/rpi_paper_figures.py`: reproducible SVG figure generator.
+- `experiments/rpi_paper_figures.py`: reproducible figure generator.
 - `paper_figures/README.md`: figure-generation instructions.
-- `paper_figures/*.svg`: committed figure output targets; regenerate them with
-  `experiments/rpi_paper_figures.py` before manuscript assembly.
+- `paper_figures/*.pdf`: primary paper/manuscript vector figures.
+- `paper_figures/*.svg`: repository/web vector figures.
+- `paper_figures/*.png`: high-resolution preview/fallback figures.
 - `experiments/rpi_robustness_audit.py`: endpoint and cross-exponent robustness
   audit over the pinned paper-scale artifacts.
 
@@ -117,11 +118,15 @@ Run the paper-scale robustness audit directly:
 python experiments\rpi_robustness_audit.py
 ```
 
-Generate paper SVG figures from the committed paper-scale artifacts:
+Generate paper figures from the committed paper-scale artifacts:
 
 ```powershell
 python experiments\rpi_paper_figures.py
 ```
+
+This writes PDF, SVG, and PNG copies of each figure. Use the PDF files for the
+paper/manuscript, SVG files for repository/web viewing, and PNG files for
+preview or fallback rendering.
 
 The full final-suite script still reruns the smaller pilot/control suite before
 regenerating the report when `-SkipRuns` is omitted. The paper-scale artifacts
@@ -139,7 +144,8 @@ for the exact paper-scale commands and resume protocol.
   across exponents, the B0 positive control separates, and the B1 ladder remains
   better than B0 across the tested range.
 - `.github/workflows/reproducibility.yml` runs compilation, report regeneration,
-  artifact validation, robustness auditing, and figure generation in CI.
+  artifact validation, robustness auditing, figure generation, and figure-output
+  existence checks in CI.
 
 ## Main Files
 
@@ -148,8 +154,8 @@ for the exact paper-scale commands and resume protocol.
 - `paper_grade_theory.md`: paper-facing formulation.
 - `paper_tables.md`: paper-ready tables.
 - `paper_run_plan.md`: completed paper-scale run plan and artifact protocol.
-- `paper_figures/`: figure output directory and instructions; regenerate final
-  SVGs from pinned artifacts using `experiments/rpi_paper_figures.py`.
+- `paper_figures/`: figure output directory and instructions; generate PDF, SVG,
+  and PNG figures from pinned artifacts using `experiments/rpi_paper_figures.py`.
 - `experiments/final_report.md`: compact current results.
 - `experiments/final_metrics.json`: machine-readable current metrics.
 - `experiments/final_manifest.json`: pinned artifact manifest.
