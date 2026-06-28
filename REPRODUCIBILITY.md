@@ -67,3 +67,6 @@ targeting `main`. It checks that:
 - paper artifacts validate successfully;
 - paper figures can be generated;
 - regenerated final report files match the committed files.
+
+Use this guide as the smoke-test checklist before treating the committed paper
+artifacts as reproducible inputs for manuscript work.
