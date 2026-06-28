@@ -10,7 +10,7 @@ Outputs are written to paper_figures/ in three formats per figure:
 
 - PDF: primary paper/manuscript vector format.
 - SVG: repository/web vector format.
-- PNG: high-resolution preview/fallback format.
+- PNG: preview/fallback format.
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXPERIMENTS = ROOT / "experiments"
 OUT = ROOT / "paper_figures"
 FIGURE_FORMATS = ("pdf", "svg", "png")
-PNG_DPI = 300
+PNG_DPI = 150
 
 # Keep concrete output names in the script so the artifact validator can verify
 # that the expected paper figure targets are generated.
