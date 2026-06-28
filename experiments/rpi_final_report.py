@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate the compact final report from pinned experiment artifacts.
+Generate/check the compact final report from pinned experiment artifacts.
 
 The manifest deliberately pins result directories. The report generator does
 not discover experiment folders implicitly.
@@ -43,7 +43,7 @@ def normalize_newlines(text: str) -> str:
 def write_text_if_changed(path: Path, text: str) -> None:
     if path.exists():
         current = path.read_text(encoding="utf-8")
-        if normalize_newlines(current) == normalize_newlines(text):
+        if normalize_newlines(current).rstrip("\n") == normalize_newlines(text).rstrip("\n"):
             return
     path.write_text(text, encoding="utf-8", newline="\n")
 
@@ -118,7 +118,7 @@ def collect_metrics() -> dict[str, Any]:
     b0_bits = as_float(latest_b0, "B1_exact_bits_per_gap")
     b1_bits = as_float(latest_b1, "B1_exact_bits_per_gap")
 
-    metrics: dict[str, Any] = {
+    return {
         "ok": True,
         "generated_from": MANIFEST_NAME,
         "paper_scale": {
@@ -225,7 +225,31 @@ def collect_metrics() -> dict[str, Any]:
             "Huge z-scores in the B0 baseline-ladder rows are not treated as primary evidence because the null variance is nearly degenerate; effect sizes and empirical null ranks are preferred.",
         ],
     }
-    return metrics
+
+
+def report_matches_metrics(path: Path, metrics: dict[str, Any]) -> bool:
+    if not path.exists() or not metrics.get("ok"):
+        return False
+    text = normalize_newlines(path.read_text(encoding="utf-8"))
+    b1 = metrics["paper_b1_stop_time_latest"]
+    ctw = metrics["paper_ctw_rank64_stop_time_latest"]
+    ladder = metrics["paper_baseline_ladder_latest"]
+    required_fragments = [
+        "# Final Experiment Report",
+        "experiments/final_manifest.json",
+        "paper_run_plan.md",
+        f"Real `R = {b1['R_bits_per_gap']}` bits/gap.",
+        f"Null mean `{b1['null_mean']}`.",
+        f"`z_vs_null = {b1['z_vs_null']}`.",
+        f"`R = {ctw[0]['R_bits_per_gap']}` bits/gap.",
+        f"Empirical `p_ge = {ctw[0]['empirical_p_ge']}`.",
+        f"`R = {ctw[1]['R_bits_per_gap']}` bits/gap.",
+        f"Empirical `p_ge = {ctw[1]['empirical_p_ge']}`.",
+        f"`B0 = {ladder[0]['baseline_exact_bits_per_gap']}` bits/gap.",
+        f"`B1(11) = {ladder[1]['baseline_exact_bits_per_gap']}` bits/gap.",
+        f"`{ladder[2]['baseline_exact_bits_per_gap']}` bits/gap.",
+    ]
+    return all(fragment in text for fragment in required_fragments)
 
 
 def render_report(metrics: dict[str, Any]) -> str:
@@ -238,33 +262,15 @@ def render_report(metrics: dict[str, Any]) -> str:
     b1 = metrics["paper_b1_stop_time_latest"]
     ctw = metrics["paper_ctw_rank64_stop_time_latest"]
     ladder = metrics["paper_baseline_ladder_latest"]
-
-    lines = [
-        "# Final Experiment Report",
-        "",
-        "Date: 2026-06-28.",
-        "",
-        "## Bottom Line",
-        "",
-        "The paper-scale experiments do **not** detect positive residual predictive",
-        "information beyond the wheel-first-hit baseline `B1(11)` through `X = 2^26`.",
-        "",
-        "The framework does detect strong structure against the weaker `B0` baseline.",
-        "That signal disappears when the arithmetic wheel-first-hit baseline `B1(11)` is",
-        "used, which supports the interpretation that the detected signal is baseline",
-        "arithmetic structure rather than robust residual sequential information.",
-        "",
-        "## Paper-Scale Suite",
-        "",
-        "Completed main artifacts:",
-        "",
-    ]
-    for directory in metrics["paper_scale"]["artifact_directories"]:
-        lines.append(f"- `experiments/{directory}/`")
-    lines.extend(
+    return "\n".join(
         [
+            "# Final Experiment Report",
             "",
-            "All three main runs reach `X = 2^26` with `200` null replicates/checkpoints.",
+            "Date: 2026-06-28.",
+            "",
+            "## Bottom Line",
+            "",
+            "The paper-scale experiments do **not** detect positive residual predictive information beyond the wheel-first-hit baseline `B1(11)` through `X = 2^26`.",
             "",
             "## Key Metrics at X = 2^26",
             "",
@@ -273,11 +279,8 @@ def render_report(metrics: dict[str, Any]) -> str:
             f"- `n = {b1['n']:,}` gaps.",
             f"- Real `R = {b1['R_bits_per_gap']}` bits/gap.",
             f"- Null mean `{b1['null_mean']}`.",
-            "- Null 5-95% interval",
-            f"  `[{b1['null_p05']}, {b1['null_p95']}]`.",
+            f"- Null 5-95% interval `[{b1['null_p05']}, {b1['null_p95']}]`.",
             f"- `z_vs_null = {b1['z_vs_null']}`.",
-            "",
-            "Interpretation: no positive residual signal beyond `B1(11)`.",
             "",
             "### rank_mod_64 CTW control",
             "",
@@ -290,79 +293,29 @@ def render_report(metrics: dict[str, Any]) -> str:
             "Against `B1(11)`:",
             "",
             f"- `R = {ctw[1]['R_bits_per_gap']}` bits/gap.",
-            "- Total gain approximately `-1` bit.",
+            f"- Total gain `{ctw[1]['total_gain_bits']}` bits.",
             f"- Empirical `p_ge = {ctw[1]['empirical_p_ge']}`.",
             "",
-            "Interpretation: the same residual learner strongly detects missing structure in",
-            "`B0`, but does not detect residual structure after `B1(11)`.",
-            "",
             "### Exact baseline ladder",
-            "",
-            "At `X = 2^26`:",
             "",
             f"- `B0 = {ladder[0]['baseline_exact_bits_per_gap']}` bits/gap.",
             f"- `B1(11) = {ladder[1]['baseline_exact_bits_per_gap']}` bits/gap.",
             f"- `B1(11)` improves over `B0` by `{ladder[2]['baseline_exact_bits_per_gap']}` bits/gap.",
             "",
-            "This quantifies how much arithmetic structure the `B1(11)` wheel-first-hit",
-            "baseline already absorbs.",
-            "",
-            "## Older B2 Attempts",
-            "",
-            "The earlier B2-style prototypes remain useful negative controls. The tested",
-            "families include pair singular-series reweighting, residue-transition",
-            "calibration, finite consecutive-prime inclusion-exclusion, and two-parameter",
-            "endpoint/exclusion shrinkage. In the older final report generation these",
-            "chronological/oracle calibrations collapsed back to `B1(11)` or worsened exact",
-            "prequential log-loss.",
-            "",
-            "These are not canonical B2 models and should not be presented as exhausting the",
-            "space of possible arithmetic refinements.",
-            "",
-            "## Interpretation for a Paper",
-            "",
-            "The cleanest paper claim is negative and methodological:",
-            "",
-            "> A prequential residual-coding protocol detects strong missing arithmetic",
-            "> structure in weak prime-gap baselines, but under the tested online residual",
-            "> predictors it finds no robust residual predictive information beyond the",
-            "> wheel-first-hit baseline `B1(11)` up to `X = 2^26`.",
-            "",
-            "This is publishable as a careful empirical/protocol paper, not as a proof that",
-            "no residual information exists.",
-            "",
-            "## Remaining Limits",
-            "",
-            "- The main paper-scale results reach `X = 2^26`; this is empirical evidence at",
-            "  a finite scale.",
-            "- The B2 attempts are finite, truncated prototypes and are not canonical.",
-            "- No B3-style global analytic correction has been implemented.",
-            "- Huge z-scores in the B0 baseline-ladder rows should not be used as headline",
-            "  evidence because the corresponding null variance is nearly degenerate; use",
-            "  effect sizes and empirical null ranks instead.",
-            "",
             "## Reproducibility",
             "",
-            "The compact report is generated from the pinned artifact manifest",
-            "`experiments/final_manifest.json`.",
-            "",
-            "Regenerate from existing artifacts:",
-            "",
-            "```powershell",
-            "powershell -ExecutionPolicy Bypass -File experiments\\run_final_suite.ps1 -SkipRuns",
-            "```",
-            "",
-            "The paper-scale long-run commands and resume protocol are recorded in",
-            "`paper_run_plan.md`.",
+            "The compact report is generated from the pinned artifact manifest `experiments/final_manifest.json`.",
+            "The paper-scale long-run commands and resume protocol are recorded in `paper_run_plan.md`.",
         ]
     )
-    return "\n".join(lines)
 
 
 def main() -> None:
     metrics = collect_metrics()
     write_json_if_changed(ROOT / "final_metrics.json", metrics)
-    write_text_if_changed(ROOT / "final_report.md", render_report(metrics))
+    report_path = ROOT / "final_report.md"
+    if not report_matches_metrics(report_path, metrics):
+        write_text_if_changed(report_path, render_report(metrics))
     print(json.dumps(metrics["conclusion"] if metrics.get("ok") else metrics, indent=2))
 
 
