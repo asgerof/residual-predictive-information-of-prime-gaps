@@ -1,40 +1,112 @@
 # Final Experiment Report
 
-Date: 2026-06-16.
+Date: 2026-06-28.
 
 ## Bottom Line
 
-The implemented pilots do not detect positive residual predictive information beyond the wheel-first-hit baseline `B1(11)`.  The framework does detect known wheel structure against `B0`, and that signal disappears once `B1(11)` is used.
+The paper-scale experiments do **not** detect positive residual predictive
+information beyond the wheel-first-hit baseline `B1(11)` through `X = 2^26`.
 
-## Key Metrics
+The framework does detect strong structure against the weaker `B0` baseline.
+That signal disappears when the arithmetic wheel-first-hit baseline `B1(11)` is
+used, which supports the interpretation that the detected signal is baseline
+arithmetic structure rather than robust residual sequential information.
 
-- B1 bucket residual at `X=4194304`: `R=-0.000004` bits/gap (null mean `-0.000004`).
-- B1 stop-time null at `X=4194304`: real `R=-0.000003728`, null mean `-0.000003727`, null 5-95% `[-0.000003733, -0.000003722]` bits/gap.
-- Baseline exact code length at `X=2097152`: `B0=4.242864`, `B1(11)=2.814953`, gain `1.427910` bits/gap.
-- Positive control rank-mod CTW at `X=1048576`: `R(B0)=0.267172`, `R(B1)=-0.000014` bits/gap.
-- Stop-time rank-mod CTW control at `X=1048576`: `R(B0)=0.267172` (null p95 `-0.000014`), `R(B1)=-0.000014` (null p95 `-0.000014`).
-- Positive control gap-mod-210 depth 1 at `X=1048576`: `R(B0)=0.249686`, `R(B1)=-0.000014` bits/gap.
+## Paper-Scale Suite
 
-## B2 Attempts
+Completed main artifacts:
 
-- Pair singular-series alpha scan at `X=262144`: selected `alpha=0`, oracle `alpha=0`, oracle gain `0.000000` bits/gap.
-- Residue-transition calibration at `X=262144` with `lambda=0.01`: transition gain `-0.000468` bits/gap.
-- Consecutive finite IE alpha scan at `X=262144`: selected `alpha=0`, oracle `alpha=0`.
-- Two-alpha scan at `X=262144`: selected `(0, 0)`, oracle `(0, 0)`.
-- Gentle head-8 sensitivity at `X=262144`: oracle `(0, 0)`.
+- `experiments/paper_b1_y11_depth4_stop_time_x26_n200/`
+- `experiments/paper_ctw_rank64_depth1_stop_time_x26_n200/`
+- `experiments/paper_ladder_b0_b1_y11_x26_n200/`
 
-## Interpretation
+All three main runs reach `X = 2^26` with `200` null replicates/checkpoints.
 
-The tested B2 families are useful negative controls: when they are miscalibrated, the residual CTW expert gains against them, but exact prequential log-loss shows that they are worse than `B1(11)`.  Chronological and oracle calibration both collapse back to `B1(11)` in the final tested windows.
+## Key Metrics at X = 2^26
+
+### Main B1(11) bucket residual
+
+- `n = 3,645,744` gaps.
+- Real `R = -2.7429243523407067e-07` bits/gap.
+- Null mean `-2.7425414055848714e-07`.
+- Null 5-95% interval
+  `[-2.7445474076652e-07, -2.7406420776259464e-07]`.
+- `z_vs_null = -0.31818465586295164`.
+
+Interpretation: no positive residual signal beyond `B1(11)`.
+
+### rank_mod_64 CTW control
+
+Against `B0`:
+
+- `R = 0.2674244536300398` bits/gap.
+- Total gain `974961.0972749958` bits.
+- Empirical `p_ge = 0.004975124378109453`.
+
+Against `B1(11)`:
+
+- `R = -2.742924352340597e-07` bits/gap.
+- Total gain approximately `-1` bit.
+- Empirical `p_ge = 0.6119402985074627`.
+
+Interpretation: the same residual learner strongly detects missing structure in
+`B0`, but does not detect residual structure after `B1(11)`.
+
+### Exact baseline ladder
+
+At `X = 2^26`:
+
+- `B0 = 4.563439906212204` bits/gap.
+- `B1(11) = 3.1704284777012335` bits/gap.
+- `B1(11)` improves over `B0` by `1.3930114285109703` bits/gap.
+
+This quantifies how much arithmetic structure the `B1(11)` wheel-first-hit
+baseline already absorbs.
+
+## Older B2 Attempts
+
+The earlier B2-style prototypes remain useful negative controls. The tested
+families include pair singular-series reweighting, residue-transition
+calibration, finite consecutive-prime inclusion-exclusion, and two-parameter
+endpoint/exclusion shrinkage. In the older final report generation these
+chronological/oracle calibrations collapsed back to `B1(11)` or worsened exact
+prequential log-loss.
+
+These are not canonical B2 models and should not be presented as exhausting the
+space of possible arithmetic refinements.
+
+## Interpretation for a Paper
+
+The cleanest paper claim is negative and methodological:
+
+> A prequential residual-coding protocol detects strong missing arithmetic
+> structure in weak prime-gap baselines, but under the tested online residual
+> predictors it finds no robust residual predictive information beyond the
+> wheel-first-hit baseline `B1(11)` up to `X = 2^26`.
+
+This is publishable as a careful empirical/protocol paper, not as a proof that
+no residual information exists.
 
 ## Remaining Limits
 
-- The largest main B1 residual run reaches only `X=2^22`.
-- Stop-time synthetic nulls are now included for the main B1 and rank-mod CTW checks; some older auxiliary pilots still use fixed-count nulls.
-- The B2 attempts are finite, truncated, and not canonical.
-- No B3 analytic correction has been implemented.
-- Real prime windows now use segmented streaming prime-pair generation; the full paper-scale runs still need to be executed.
+- The main paper-scale results reach `X = 2^26`; this is empirical evidence at
+  a finite scale.
+- The B2 attempts are finite, truncated prototypes and are not canonical.
+- No B3-style global analytic correction has been implemented.
+- Huge z-scores in the B0 baseline-ladder rows should not be used as headline
+  evidence because the corresponding null variance is nearly degenerate; use
+  effect sizes and empirical null ranks instead.
 
 ## Reproducibility
 
-The compact report is generated from the pinned artifact manifest `experiments/final_manifest.json`.
+The compact report is generated from the pinned artifact manifest
+`experiments/final_manifest.json`.
+
+Regenerate from existing artifacts:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File experiments\run_final_suite.ps1 -SkipRuns
+```
+
+The paper-scale long-run commands and resume protocol are recorded in
+`paper_run_plan.md`.
