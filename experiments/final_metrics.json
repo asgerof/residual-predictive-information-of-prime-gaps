@@ -1,463 +1,95 @@
 {
   "ok": true,
-  "artifacts": {
-    "b1_bucket": {
-      "name": "B1 bucket residual",
-      "path": "results_b1_y11_depth4_pilot\\b1_u1_real_vs_null.csv",
-      "metadata_path": "results_b1_y11_depth4_pilot\\b1_u1_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 22,
-        "train_windows": 3,
-        "y": 11,
-        "W": 2310,
-        "phi_W": 480,
-        "depth": 4,
-        "bucket_edges": [
-          0.0,
-          0.5,
-          1.0,
-          1.5,
-          2.0,
-          2.5,
-          3.0,
-          3.5,
-          4.0,
-          4.5,
-          5.0,
-          5.5,
-          6.0,
-          6.5,
-          7.0,
-          7.5,
-          8.0,
-          Infinity
-        ],
-        "nulls": 12,
-        "null_mode": "fixed-count",
-        "seed": 20260616
-      }
-    },
-    "b1_bucket_stop_time": {
-      "name": "B1 bucket residual stop-time null",
-      "path": "results_b1_y11_depth4_stop_time\\b1_u1_real_vs_null.csv",
-      "metadata_path": "results_b1_y11_depth4_stop_time\\b1_u1_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 22,
-        "train_windows": 3,
-        "y": 11,
-        "W": 2310,
-        "phi_W": 480,
-        "depth": 4,
-        "bucket_edges": [
-          0.0,
-          0.5,
-          1.0,
-          1.5,
-          2.0,
-          2.5,
-          3.0,
-          3.5,
-          4.0,
-          4.5,
-          5.0,
-          5.5,
-          6.0,
-          6.5,
-          7.0,
-          7.5,
-          8.0,
-          Infinity
-        ],
-        "nulls": 12,
-        "null_mode": "stop-time",
-        "seed": 20260616
-      }
-    },
-    "baseline_ladder": {
-      "name": "B0/B1 baseline ladder",
-      "path": "results_ladder_b0_b1_y11\\baseline_ladder.csv",
-      "metadata_path": "results_ladder_b0_b1_y11\\baseline_ladder_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 21,
-        "train_windows": 3,
-        "depth": 4,
-        "bucket_edges": [
-          0.0,
-          0.5,
-          1.0,
-          1.5,
-          2.0,
-          2.5,
-          3.0,
-          3.5,
-          4.0,
-          4.5,
-          5.0,
-          5.5,
-          6.0,
-          6.5,
-          7.0,
-          7.5,
-          8.0,
-          Infinity
-        ],
-        "nulls": 12,
-        "seed": 20260616,
-        "baselines": [
-          {
-            "label": "B0",
-            "y": 2,
-            "W": 2,
-            "phi_W": 1
-          },
-          {
-            "label": "B1(11)",
-            "y": 11,
-            "W": 2310,
-            "phi_W": 480
-          }
-        ]
-      }
-    },
-    "symbol_depth1": {
-      "name": "gap_mod_210 depth 1",
-      "path": "results_symbol_mod210_depth1\\symbol_ladder.csv",
-      "metadata_path": "results_symbol_mod210_depth1\\symbol_ladder_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 20,
-        "train_windows": 3,
-        "symbol_mod": 210,
-        "depth": 1,
-        "nulls": 8,
-        "seed": 20260616,
-        "baselines": [
-          {
-            "label": "B0",
-            "y": 2,
-            "W": 2,
-            "phi_W": 1
-          },
-          {
-            "label": "B1(11)",
-            "y": 11,
-            "W": 2310,
-            "phi_W": 480
-          }
-        ]
-      }
-    },
-    "ctw_rank64": {
-      "name": "rank_mod_64 CTW",
-      "path": "results_ctw_rank64_depth1\\ctw_symbol_ladder.csv",
-      "metadata_path": "results_ctw_rank64_depth1\\ctw_symbol_ladder_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 20,
-        "train_windows": 3,
-        "symbolizer": "rank_mod",
-        "symbol_mod": 64,
-        "depth": 1,
-        "ctw_mix_weight": 0.5,
-        "nulls": 12,
-        "seed": 20260616,
-        "baselines": [
-          {
-            "label": "B0",
-            "y": 2,
-            "W": 2,
-            "phi_W": 1
-          },
-          {
-            "label": "B1(11)",
-            "y": 11,
-            "W": 2310,
-            "phi_W": 480
-          }
-        ]
-      }
-    },
-    "ctw_rank64_stop_time": {
-      "name": "rank_mod_64 CTW stop-time null",
-      "path": "results_ctw_rank64_depth1_stop_time\\ctw_symbol_ladder.csv",
-      "metadata_path": "results_ctw_rank64_depth1_stop_time\\ctw_symbol_ladder_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 20,
-        "train_windows": 3,
-        "symbolizer": "rank_mod",
-        "symbol_mod": 64,
-        "depth": 1,
-        "ctw_mix_weight": 0.5,
-        "nulls": 12,
-        "null_mode": "stop-time",
-        "seed": 20260616,
-        "baselines": [
-          {
-            "label": "B0",
-            "y": 2,
-            "W": 2,
-            "phi_W": 1
-          },
-          {
-            "label": "B1(11)",
-            "y": 11,
-            "W": 2310,
-            "phi_W": 480
-          }
-        ]
-      }
-    },
-    "pair_alpha": {
-      "name": "B2 pair alpha scan",
-      "path": "results_b2_pair_alpha_scan_y11\\b2_pair_alpha_selected.csv",
-      "metadata_path": "results_b2_pair_alpha_scan_y11\\b2_pair_alpha_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 18,
-        "train_windows": 3,
-        "b1_y": 11,
-        "tuple_y": 11,
-        "alpha_grid": [
-          0.0,
-          0.03125,
-          0.0625,
-          0.125,
-          0.25,
-          0.5,
-          0.75,
-          1.0
-        ]
-      }
-    },
-    "transition_mod30": {
-      "name": "transition mod 30 lambda 0.01",
-      "path": "results_transition_mod30_lam001\\transition_calibration.csv",
-      "metadata_path": "results_transition_mod30_lam001\\transition_calibration_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 18,
-        "train_windows": 3,
-        "y": 11,
-        "W": 2310,
-        "phi_W": 480,
-        "mod": 30,
-        "transition_lambda": 0.01,
-        "symbol": "next_unit_residue_mod_30",
-        "residual_depth": 1
-      }
-    },
-    "consecutive_alpha": {
-      "name": "B2 consecutive alpha scan",
-      "path": "results_b2_consecutive_alpha_scan_y11_r2\\b2_consecutive_alpha_selected.csv",
-      "metadata_path": "results_b2_consecutive_alpha_scan_y11_r2\\b2_consecutive_alpha_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 18,
-        "train_windows": 3,
-        "b1_y": 11,
-        "tuple_y": 11,
-        "ie_order": 2,
-        "max_rank": 64,
-        "max_correction_rank": 20,
-        "alpha_grid": [
-          0.0,
-          0.03125,
-          0.0625,
-          0.125,
-          0.25,
-          0.5,
-          0.75,
-          1.0
-        ]
-      }
-    },
-    "consecutive_two_alpha": {
-      "name": "B2 consecutive two-alpha scan",
-      "path": "results_b2_consecutive_two_alpha_scan_y11_r2\\b2_consecutive_two_alpha_selected.csv",
-      "metadata_path": "results_b2_consecutive_two_alpha_scan_y11_r2\\b2_consecutive_two_alpha_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 18,
-        "train_windows": 3,
-        "b1_y": 11,
-        "tuple_y": 11,
-        "ie_order": 2,
-        "max_rank": 64,
-        "max_correction_rank": 20,
-        "pair_grid": [
-          0.0,
-          0.015625,
-          0.03125,
-          0.0625,
-          0.125
-        ],
-        "exclusion_grid": [
-          0.0,
-          0.015625,
-          0.03125,
-          0.0625,
-          0.125
-        ]
-      }
-    },
-    "consecutive_two_alpha_head8": {
-      "name": "B2 consecutive two-alpha head-8 sensitivity",
-      "path": "results_b2_consecutive_two_alpha_scan_y11_r1_head8\\b2_consecutive_two_alpha_selected.csv",
-      "metadata_path": "results_b2_consecutive_two_alpha_scan_y11_r1_head8\\b2_consecutive_two_alpha_metadata.json",
-      "metadata": {
-        "min_exp": 12,
-        "max_exp": 18,
-        "train_windows": 3,
-        "b1_y": 11,
-        "tuple_y": 11,
-        "ie_order": 1,
-        "max_rank": 64,
-        "max_correction_rank": 8,
-        "pair_grid": [
-          0.0,
-          0.015625,
-          0.03125,
-          0.0625,
-          0.125
-        ],
-        "exclusion_grid": [
-          0.0,
-          0.015625,
-          0.03125,
-          0.0625,
-          0.125
-        ]
-      }
-    }
+  "generated_from": "experiments/final_manifest.json",
+  "paper_scale": {
+    "max_exp": 26,
+    "X": 67108864,
+    "nulls": 200,
+    "seed": 20260616,
+    "artifact_directories": [
+      "paper_b1_y11_depth4_stop_time_x26_n200",
+      "paper_ctw_rank64_depth1_stop_time_x26_n200",
+      "paper_ladder_b0_b1_y11_x26_n200"
+    ]
   },
-  "warnings": [],
-  "b1_bucket_latest": {
-    "label": "B1 bucket residual latest",
-    "X": 4194304,
-    "n": 268216,
-    "R_bits_per_gap": -3.7283383541623186e-06,
-    "null_mean": -3.7283383541623156e-06
+  "paper_b1_stop_time_latest": {
+    "label": "Paper B1(11) bucket residual stop-time null",
+    "X": 67108864,
+    "n": 3645744,
+    "R_bits_per_gap": -2.7429243523407067e-7,
+    "B1_exact_bits_per_gap": 3.1704284777012335,
+    "U1_exact_bits_per_gap": 3.170428751993669,
+    "null_mean": -2.7425414055848714e-7,
+    "null_sd": 1.2035362132615912e-10,
+    "null_p05": -2.7445474076652e-7,
+    "null_p95": -2.7406420776259464e-7,
+    "z_vs_null": -0.31818465586295164
   },
-  "b1_bucket_stop_time_latest": {
-    "label": "B1 bucket residual latest with stop-time null",
-    "X": 4194304,
-    "n": 268216,
-    "R_bits_per_gap": -3.7283383541623186e-06,
-    "null_mean": -3.727055943477218e-06,
-    "null_sd": 3.3117423348175874e-09,
-    "null_p05": -3.733307449068354e-06,
-    "null_p95": -3.721761137370206e-06
-  },
-  "baseline_ladder_latest": [
+  "paper_ctw_rank64_stop_time_latest": [
     {
       "label": "B0",
-      "X": 2097152,
-      "n": 140336,
-      "bits_per_gap": 4.242863702337939,
-      "R_bits_per_gap": -7.125755330064909e-06
+      "X": 67108864,
+      "n": 3645744,
+      "R_bits_per_gap": 0.2674244536300398,
+      "total_gain_bits": 974961.0972749958,
+      "final_ctw_weight": 1.0,
+      "B_exact_bits_per_gap": 4.563439906212204,
+      "U_exact_bits_per_gap": 4.296015452582619,
+      "null_mean": -2.742536225148786e-7,
+      "null_sd": 1.3239419899629498e-10,
+      "null_p95": -2.74048885936451e-7,
+      "empirical_p_ge": 0.004975124378109453
     },
     {
       "label": "B1(11)",
-      "X": 2097152,
-      "n": 140336,
-      "bits_per_gap": 2.81495327850538,
-      "R_bits_per_gap": -7.1257553300649776e-06
-    },
-    {
-      "label": "B0 minus B1",
-      "X": 2097152,
-      "bits_per_gap": 1.4279104238325586
+      "X": 67108864,
+      "n": 3645744,
+      "R_bits_per_gap": -2.742924352340597e-7,
+      "total_gain_bits": -0.9999999999999618,
+      "final_ctw_weight": 0.0,
+      "B_exact_bits_per_gap": 3.1704284777012335,
+      "U_exact_bits_per_gap": 3.170428751993669,
+      "null_mean": -2.742541405584825e-7,
+      "null_sd": 1.2035362132641004e-10,
+      "null_p95": -2.740642077625828e-7,
+      "empirical_p_ge": 0.6119402985074627
     }
   ],
-  "positive_control_gap_mod210_depth1": [
+  "paper_baseline_ladder_latest": [
     {
       "label": "B0",
-      "X": 1048576,
-      "R_bits_per_gap": 0.24968611587298067
+      "X": 67108864,
+      "n": 3645744,
+      "baseline_exact_bits_per_gap": 4.563439906212204,
+      "residual_exact_bits_per_gap": 4.563292269169895,
+      "R_bits_per_gap": 0.00014763704241220558,
+      "null_mean": -2.742924352340716e-7
     },
     {
       "label": "B1(11)",
-      "X": 1048576,
-      "R_bits_per_gap": -1.358954148887016e-05
-    }
-  ],
-  "positive_control_rank64_ctw": [
-    {
-      "label": "B0",
-      "X": 1048576,
-      "R_bits_per_gap": 0.26717179552634424
+      "X": 67108864,
+      "n": 3645744,
+      "baseline_exact_bits_per_gap": 3.1704284777012335,
+      "residual_exact_bits_per_gap": 3.170428751993669,
+      "R_bits_per_gap": -2.7429243523407067e-7,
+      "null_mean": -2.7429243523406993e-7
     },
     {
-      "label": "B1(11)",
-      "X": 1048576,
-      "R_bits_per_gap": -1.3589541488870305e-05
+      "label": "B0 minus B1(11)",
+      "X": 67108864,
+      "baseline_exact_bits_per_gap": 1.3930114285109703
     }
   ],
-  "positive_control_rank64_ctw_stop_time": [
-    {
-      "label": "B0",
-      "X": 1048576,
-      "R_bits_per_gap": 0.26717179552634424,
-      "null_mean": -1.3601761870489108e-05,
-      "null_p95": -1.3522650439486031e-05
-    },
-    {
-      "label": "B1(11)",
-      "X": 1048576,
-      "R_bits_per_gap": -1.3589541488870305e-05,
-      "null_mean": -1.3597691219624212e-05,
-      "null_p95": -1.3531067330591059e-05
-    }
-  ],
-  "b2_pair_alpha_latest": {
-    "label": "B2 pair alpha scan latest",
-    "X": 262144,
-    "selected_alpha": 0.0,
-    "selected_delta_vs_B1_bits_per_gap": 0.0,
-    "oracle_alpha": 0.0,
-    "oracle_delta_vs_B1_bits_per_gap": 0.0
-  },
-  "transition_mod30_lam001_latest": {
-    "label": "Transition mod 30 lambda 0.01 latest",
-    "X": 262144,
-    "Btr_gain_vs_B1": -0.00046818429568261925,
-    "U_gain_vs_Btr": -4.9043648847474296e-05
-  },
-  "b2_consecutive_alpha_latest": {
-    "label": "B2 consecutive alpha scan latest",
-    "X": 262144,
-    "selected_alpha": 0.0,
-    "selected_delta_vs_B1_bits_per_gap": 0.0,
-    "oracle_alpha": 0.0,
-    "oracle_delta_vs_B1_bits_per_gap": 0.0
-  },
-  "b2_consecutive_two_alpha_latest": {
-    "label": "B2 consecutive two-alpha scan latest",
-    "X": 262144,
-    "selected_pair_alpha": 0.0,
-    "selected_exclusion_alpha": 0.0,
-    "selected_delta_vs_B1_bits_per_gap": 0.0,
-    "oracle_pair_alpha": 0.0,
-    "oracle_exclusion_alpha": 0.0,
-    "oracle_delta_vs_B1_bits_per_gap": 0.0
-  },
-  "b2_consecutive_two_alpha_head8_latest": {
-    "label": "B2 consecutive two-alpha head-8 latest",
-    "X": 262144,
-    "selected_pair_alpha": 0.0,
-    "selected_exclusion_alpha": 0.0,
-    "oracle_pair_alpha": 0.0,
-    "oracle_exclusion_alpha": 0.0,
-    "oracle_delta_vs_B1_bits_per_gap": 0.0
-  },
   "conclusion": {
     "residual_beyond_B1_detected": false,
     "positive_controls_pass": true,
-    "strong_residual_hypothesis_status": "not supported by these pilots",
+    "paper_scale_runs_complete": true,
+    "strong_residual_hypothesis_status": "not supported at X <= 2^26 by these tests",
     "best_current_baseline": "B1(11) wheel-first-hit among tested families"
-  }
+  },
+  "notes": [
+    "The B0 controls show large residual signal under CTW/rank-mod, confirming the residual machinery is active.",
+    "The same residual machinery gives ordinary null-level behavior against B1(11).",
+    "Huge z-scores in the B0 baseline-ladder rows are not treated as primary evidence because the null variance is nearly degenerate; effect sizes and empirical null ranks are preferred."
+  ]
 }
