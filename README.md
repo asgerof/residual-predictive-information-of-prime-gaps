@@ -54,8 +54,8 @@ Paper-facing files:
 - `paper_tables.md`: paper-ready result tables.
 - `experiments/rpi_paper_figures.py`: reproducible SVG figure generator.
 - `paper_figures/README.md`: figure-generation instructions.
-- `paper_figures/*.svg`: generated paper figures from the committed
-  paper-scale artifacts.
+- `paper_figures/*.svg`: committed figure output targets; regenerate them with
+  `experiments/rpi_paper_figures.py` before manuscript assembly.
 - `experiments/rpi_robustness_audit.py`: endpoint and cross-exponent robustness
   audit over the pinned paper-scale artifacts.
 
@@ -148,7 +148,8 @@ for the exact paper-scale commands and resume protocol.
 - `paper_grade_theory.md`: paper-facing formulation.
 - `paper_tables.md`: paper-ready tables.
 - `paper_run_plan.md`: completed paper-scale run plan and artifact protocol.
-- `paper_figures/`: generated SVG paper figures and figure instructions.
+- `paper_figures/`: figure output directory and instructions; regenerate final
+  SVGs from pinned artifacts using `experiments/rpi_paper_figures.py`.
 - `experiments/final_report.md`: compact current results.
 - `experiments/final_metrics.json`: machine-readable current metrics.
 - `experiments/final_manifest.json`: pinned artifact manifest.
