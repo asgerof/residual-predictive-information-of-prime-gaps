@@ -84,12 +84,26 @@ The compact final report is:
 - `experiments/paper_ladder_b0_b1_y11_x26_n200/`
 - `experiments/paper_logs/`
 
-## Reproduce
+## Reproduce and Validate
 
-Compile all scripts and regenerate the final report from existing artifacts:
+Install the Python dependency used for figure generation:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Compile all scripts, regenerate the final report from existing pinned artifacts,
+and validate required artifact, metadata, checkpoint, and headline-metric
+consistency:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File experiments\run_final_suite.ps1 -SkipRuns
+```
+
+Run the artifact validator directly:
+
+```powershell
+python experiments\validate_paper_artifacts.py
 ```
 
 Generate paper SVG figures from the committed paper-scale artifacts:
@@ -99,9 +113,18 @@ python experiments\rpi_paper_figures.py
 ```
 
 The full final-suite script still reruns the smaller pilot/control suite before
-regenerating the report. The paper-scale artifacts above were generated as
-long, checkpointed batch runs. See `paper_run_plan.md` for the exact
-paper-scale commands and resume protocol.
+regenerating the report when `-SkipRuns` is omitted. The paper-scale artifacts
+above were generated as long, checkpointed batch runs. See `paper_run_plan.md`
+for the exact paper-scale commands and resume protocol.
+
+## Reproducibility Guardrails
+
+- `experiments/final_manifest.json` pins the artifacts used by the final report.
+- `experiments/validate_paper_artifacts.py` checks that required paper-scale
+  artifacts exist, reach `X = 2^26`, have 200 null checkpoints, cover the
+  expected dyadic exponents, and agree with `experiments/final_metrics.json`.
+- `.github/workflows/reproducibility.yml` runs compilation, report regeneration,
+  artifact validation, and figure generation in CI.
 
 ## Main Files
 
@@ -112,6 +135,8 @@ paper-scale commands and resume protocol.
 - `experiments/final_report.md`: compact current results.
 - `experiments/final_metrics.json`: machine-readable current metrics.
 - `experiments/final_manifest.json`: pinned artifact manifest.
+- `experiments/validate_paper_artifacts.py`: reproducibility validator for
+  pinned paper artifacts and metrics.
 - `experiments/results_summary.md`: older detailed experiment log and pilot
   interpretation.
 - `experiments/rpi_final_report.py`: final report generator.
@@ -119,7 +144,7 @@ paper-scale commands and resume protocol.
 - `experiments/rpi_runtime_estimate.py`: estimate long-run wall time before
   launching paper-scale experiments.
 - `experiments/run_final_suite.ps1`: reproducibility driver for compilation,
-  pilot reruns, and report generation.
+  optional pilot reruns, report generation, and artifact validation.
 
 ## Limitations
 
