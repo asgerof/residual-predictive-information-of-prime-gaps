@@ -6,7 +6,8 @@ This script is intentionally conservative:
 - it reads only artifacts pinned in experiments/final_manifest.json;
 - it does not discover experiment folders implicitly;
 - it does not rerun long simulations;
-- it fails if required files, metadata, checkpoint counts, or headline metrics drift.
+- it fails if required files, metadata, checkpoint counts, or headline metrics drift;
+- it warns, but does not fail, when optional/pilot artifacts or generated figures are absent.
 """
 
 from __future__ import annotations
@@ -24,21 +25,45 @@ ROOT = Path(__file__).resolve().parent
 REPO_ROOT = ROOT.parent
 MANIFEST_PATH = ROOT / "final_manifest.json"
 METRICS_PATH = ROOT / "final_metrics.json"
+FIGURE_SCRIPT_PATH = ROOT / "rpi_paper_figures.py"
+FIGURE_README_PATH = REPO_ROOT / "paper_figures" / "README.md"
+FIGURE_OUT_DIR = REPO_ROOT / "paper_figures"
 
 EXPECTED_MAX_EXP = 26
 EXPECTED_X = 1 << EXPECTED_MAX_EXP
 EXPECTED_NULLS = 200
 EXPECTED_SEED = 20260616
 EXPECTED_TRAIN_WINDOWS = 3
+EXPECTED_MANIFEST_SCHEMA_VERSION = 2
 EXPECTED_REQUIRED = {
     "paper_b1_stop_time",
     "paper_ctw_rank64_stop_time",
     "paper_baseline_ladder",
 }
+EXPECTED_FIGURES = {
+    "figure_1_b1_residual_stop_time.svg": [
+        "paper_b1_y11_depth4_stop_time_x26_n200",
+        "b1_u1_real_vs_null.csv",
+    ],
+    "figure_2_ctw_positive_control.svg": [
+        "paper_ctw_rank64_depth1_stop_time_x26_n200",
+        "ctw_symbol_ladder.csv",
+    ],
+    "figure_3_baseline_ladder_bits.svg": [
+        "paper_ladder_b0_b1_y11_x26_n200",
+        "baseline_ladder.csv",
+    ],
+}
+
+WARNINGS: list[str] = []
 
 
 class ValidationError(Exception):
     """Raised when a reproducibility invariant is violated."""
+
+
+def warn(message: str) -> None:
+    WARNINGS.append(message)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -55,6 +80,14 @@ def read_csv(path: Path) -> list[dict[str, str]]:
     if not rows:
         raise ValidationError(f"empty CSV file: {path}")
     return rows
+
+
+def try_read_csv(path: Path) -> list[dict[str, str]] | None:
+    try:
+        return read_csv(path)
+    except Exception as exc:  # warning path only; keep optional artifacts non-fatal
+        warn(f"optional/readability issue for {path}: {exc}")
+        return None
 
 
 def as_float(row: dict[str, str], key: str, path: Path) -> float:
@@ -74,6 +107,8 @@ def assert_close(actual: float, expected: float, label: str) -> None:
 
 
 def latest_row(rows: list[dict[str, str]], path: Path) -> dict[str, str]:
+    if not rows:
+        raise ValidationError(f"no rows available in {path}")
     return max(rows, key=lambda row: as_float(row, "exp", path))
 
 
@@ -90,12 +125,20 @@ def metadata_path(spec: dict[str, Any]) -> Path | None:
     return ROOT / value if value else None
 
 
-def expected_testable_exp_count(metadata: dict[str, Any]) -> int:
+def artifact_directory(spec: dict[str, Any]) -> str:
+    return Path(spec["path"]).parts[0]
+
+
+def expected_testable_exps(metadata: dict[str, Any]) -> set[int]:
     min_exp = int(metadata["min_exp"])
     max_exp = int(metadata["max_exp"])
     train_windows = int(metadata.get("train_windows", EXPECTED_TRAIN_WINDOWS))
     first_test_exp = min_exp + train_windows
-    return max_exp - first_test_exp + 1
+    return set(range(first_test_exp, max_exp + 1))
+
+
+def expected_testable_exp_count(metadata: dict[str, Any]) -> int:
+    return len(expected_testable_exps(metadata))
 
 
 def validate_metadata(name: str, metadata: dict[str, Any]) -> None:
@@ -131,7 +174,15 @@ def validate_checkpoint(path: Path, metadata: dict[str, Any]) -> None:
         per_null[null_index] += 1
         exps_by_null[null_index].add(exp)
 
-    assert_equal(len(per_null), EXPECTED_NULLS, f"{path} unique null_index count")
+    expected_null_indices = set(range(EXPECTED_NULLS))
+    actual_null_indices = set(per_null)
+    if actual_null_indices != expected_null_indices:
+        missing = sorted(expected_null_indices - actual_null_indices)[:10]
+        extra = sorted(actual_null_indices - expected_null_indices)[:10]
+        raise ValidationError(
+            f"{path} has wrong null_index set; missing sample {missing}, "
+            f"extra sample {extra}"
+        )
 
     bad_counts = {
         idx: count for idx, count in per_null.items() if count != expected_rows_per_null
@@ -143,13 +194,7 @@ def validate_checkpoint(path: Path, metadata: dict[str, Any]) -> None:
             f"{expected_rows_per_null}, sample failures: {sample}"
         )
 
-    expected_exps = set(
-        range(
-            int(metadata["min_exp"])
-            + int(metadata.get("train_windows", EXPECTED_TRAIN_WINDOWS)),
-            int(metadata["max_exp"]) + 1,
-        )
-    )
+    expected_exps = expected_testable_exps(metadata)
     bad_exps = {
         idx: sorted(exps)
         for idx, exps in exps_by_null.items()
@@ -174,8 +219,24 @@ def validate_artifact_csv(name: str, path: Path) -> list[dict[str, str]]:
     return rows
 
 
-def validate_manifest_and_artifacts() -> dict[str, Any]:
-    manifest = read_json(MANIFEST_PATH)
+def validate_rows_cover_exps(
+    rows: list[dict[str, str]], path: Path, metadata: dict[str, Any], label: str
+) -> None:
+    actual = {int(as_float(row, "exp", path)) for row in rows}
+    expected = expected_testable_exps(metadata)
+    if actual != expected:
+        raise ValidationError(
+            f"{label} exp coverage: expected {sorted(expected)}, got {sorted(actual)}"
+        )
+
+
+def validate_manifest_schema(manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    assert_equal(
+        int(manifest.get("schema_version", -1)),
+        EXPECTED_MANIFEST_SCHEMA_VERSION,
+        "final_manifest schema_version",
+    )
+
     artifacts = manifest.get("artifacts")
     if not isinstance(artifacts, dict):
         raise ValidationError("final_manifest.json has no artifacts object")
@@ -184,6 +245,60 @@ def validate_manifest_and_artifacts() -> dict[str, Any]:
         key for key, spec in artifacts.items() if bool(spec.get("required", True))
     }
     assert_equal(required_keys, EXPECTED_REQUIRED, "required paper-scale artifact keys")
+
+    for key, spec in artifacts.items():
+        if not isinstance(spec, dict):
+            raise ValidationError(f"manifest artifact {key!r} is not an object")
+        for field in ("name", "path"):
+            if field not in spec:
+                raise ValidationError(f"manifest artifact {key!r} is missing {field!r}")
+        if "required" in spec and not isinstance(spec["required"], bool):
+            raise ValidationError(f"manifest artifact {key!r} has non-boolean required flag")
+
+    return artifacts
+
+
+def validate_optional_artifacts(artifacts: dict[str, dict[str, Any]]) -> None:
+    """Report optional/pilot artifact drift without blocking paper-scale validation."""
+    for key, spec in sorted(artifacts.items()):
+        if key in EXPECTED_REQUIRED:
+            continue
+
+        path = artifact_path(spec)
+        if not path.exists():
+            warn(f"optional artifact missing: {key} -> {path}")
+            continue
+        try_read_csv(path)
+
+        meta_path = metadata_path(spec)
+        if meta_path is None:
+            warn(f"optional artifact has no metadata_path: {key}")
+            continue
+        if not meta_path.exists():
+            warn(f"optional metadata missing: {key} -> {meta_path}")
+            continue
+
+        try:
+            metadata = read_json(meta_path)
+        except Exception as exc:
+            warn(f"optional metadata is not readable JSON: {key} -> {exc}")
+            continue
+
+        checkpoint_files: list[str] = []
+        if metadata.get("checkpoint_file"):
+            checkpoint_files.append(metadata["checkpoint_file"])
+        checkpoint_files.extend(metadata.get("checkpoint_files", []))
+        for checkpoint_file in checkpoint_files:
+            checkpoint_path = meta_path.parent / checkpoint_file
+            if not checkpoint_path.exists():
+                warn(f"optional checkpoint missing: {key} -> {checkpoint_path}")
+            else:
+                try_read_csv(checkpoint_path)
+
+
+def validate_manifest_and_artifacts() -> dict[str, Any]:
+    manifest = read_json(MANIFEST_PATH)
+    artifacts = validate_manifest_schema(manifest)
 
     for key in sorted(EXPECTED_REQUIRED):
         spec = artifacts[key]
@@ -217,6 +332,9 @@ def validate_manifest_and_artifacts() -> dict[str, Any]:
                     expected_count,
                     f"{name} aggregated rows for {baseline}",
                 )
+                validate_rows_cover_exps(
+                    baseline_rows, artifact_path(spec), metadata, f"{name} {baseline}"
+                )
         elif key == "paper_baseline_ladder":
             for baseline in ("B0", "B1(11)"):
                 baseline_rows = rows_where(rows, "baseline", baseline)
@@ -225,21 +343,54 @@ def validate_manifest_and_artifacts() -> dict[str, Any]:
                     expected_count,
                     f"{name} aggregated rows for {baseline}",
                 )
+                validate_rows_cover_exps(
+                    baseline_rows, artifact_path(spec), metadata, f"{name} {baseline}"
+                )
         else:
             assert_equal(len(rows), expected_count, f"{name} aggregated row count")
+            validate_rows_cover_exps(rows, artifact_path(spec), metadata, name)
 
+    validate_optional_artifacts(artifacts)
     return manifest
 
 
 def validate_metrics() -> None:
     metrics = read_json(METRICS_PATH)
     assert_equal(bool(metrics.get("ok")), True, "final_metrics ok")
+    assert_equal(
+        metrics.get("generated_from"),
+        "experiments/final_manifest.json",
+        "final_metrics generated_from",
+    )
 
     paper_scale = metrics["paper_scale"]
     assert_equal(int(paper_scale["max_exp"]), EXPECTED_MAX_EXP, "paper_scale max_exp")
     assert_equal(int(paper_scale["X"]), EXPECTED_X, "paper_scale X")
     assert_equal(int(paper_scale["nulls"]), EXPECTED_NULLS, "paper_scale nulls")
     assert_equal(int(paper_scale["seed"]), EXPECTED_SEED, "paper_scale seed")
+
+    manifest = read_json(MANIFEST_PATH)
+    artifacts = validate_manifest_schema(manifest)
+    expected_dirs = sorted(artifact_directory(artifacts[key]) for key in EXPECTED_REQUIRED)
+    actual_dirs = sorted(paper_scale.get("artifact_directories", []))
+    assert_equal(actual_dirs, expected_dirs, "paper_scale artifact directories")
+
+    conclusion = metrics.get("conclusion", {})
+    assert_equal(
+        bool(conclusion.get("paper_scale_runs_complete")),
+        True,
+        "conclusion paper_scale_runs_complete",
+    )
+    assert_equal(
+        bool(conclusion.get("positive_controls_pass")),
+        True,
+        "conclusion positive_controls_pass",
+    )
+    assert_equal(
+        bool(conclusion.get("residual_beyond_B1_detected")),
+        False,
+        "conclusion residual_beyond_B1_detected",
+    )
 
     b1_path = ROOT / "paper_b1_y11_depth4_stop_time_x26_n200" / "b1_u1_real_vs_null.csv"
     b1_latest = latest_row(read_csv(b1_path), b1_path)
@@ -276,18 +427,58 @@ def validate_metrics() -> None:
     assert_close(b0 - b1, improvement, "B0 minus B1(11) improvement")
 
 
+def validate_figure_contract() -> None:
+    """Ensure the paper figure generator is tied to pinned paper-scale inputs."""
+    if not FIGURE_SCRIPT_PATH.exists():
+        raise ValidationError(f"missing figure generator: {FIGURE_SCRIPT_PATH}")
+    figure_script = FIGURE_SCRIPT_PATH.read_text(encoding="utf-8")
+
+    if not FIGURE_README_PATH.exists():
+        warn(f"missing paper figure README: {FIGURE_README_PATH}")
+        readme = ""
+    else:
+        readme = FIGURE_README_PATH.read_text(encoding="utf-8")
+
+    for figure_name, required_tokens in EXPECTED_FIGURES.items():
+        if figure_name not in figure_script:
+            raise ValidationError(f"figure generator does not write {figure_name}")
+        if readme and figure_name not in readme:
+            warn(f"paper figure README does not mention {figure_name}")
+        for token in required_tokens:
+            if token not in figure_script:
+                raise ValidationError(
+                    f"figure generator for {figure_name} is not tied to {token}"
+                )
+
+        figure_path = FIGURE_OUT_DIR / figure_name
+        if not figure_path.exists():
+            warn(
+                f"generated figure not committed: {figure_path}; "
+                "run python experiments/rpi_paper_figures.py before manuscript assembly"
+            )
+            continue
+        content = figure_path.read_text(encoding="utf-8", errors="replace")
+        if "<svg" not in content[:500].lower():
+            raise ValidationError(f"generated figure does not look like SVG: {figure_path}")
+
+
 def main() -> int:
     try:
         validate_manifest_and_artifacts()
         validate_metrics()
+        validate_figure_contract()
     except ValidationError as exc:
         print(f"artifact validation failed: {exc}", file=sys.stderr)
         return 1
 
     print(
         "artifact validation passed: required paper-scale CSV, metadata, "
-        "checkpoint counts, and final metrics are consistent"
+        "checkpoint counts, final metrics, and figure input contracts are consistent"
     )
+    if WARNINGS:
+        print("artifact validation warnings:", file=sys.stderr)
+        for warning in WARNINGS:
+            print(f"- {warning}", file=sys.stderr)
     return 0
 
 
