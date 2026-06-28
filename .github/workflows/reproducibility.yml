@@ -1,0 +1,72 @@
+name: Reproducibility
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  artifact-checks:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Compile experiment scripts
+        run: |
+          python -m py_compile `
+            experiments\rpi_b1_u1.py `
+            experiments\rpi_baseline_ladder.py `
+            experiments\rpi_symbol_ladder.py `
+            experiments\rpi_ctw_symbol_ladder.py `
+            experiments\rpi_b2_pair_ladder.py `
+            experiments\rpi_b2_pair_alpha_scan.py `
+            experiments\rpi_transition_calibration.py `
+            experiments\rpi_b2_consecutive_ladder.py `
+            experiments\rpi_b2_consecutive_alpha_scan.py `
+            experiments\rpi_b2_consecutive_two_alpha_scan.py `
+            experiments\rpi_runtime_estimate.py `
+            experiments\rpi_final_report.py `
+            experiments\rpi_paper_figures.py `
+            experiments\validate_paper_artifacts.py
+
+      - name: Regenerate report from pinned artifacts
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File experiments\run_final_suite.ps1 -SkipRuns
+
+      - name: Validate pinned paper artifacts
+        run: python experiments\validate_paper_artifacts.py
+
+      - name: Generate paper figures
+        run: python experiments\rpi_paper_figures.py
+
+      - name: Check generated figure files
+        shell: pwsh
+        run: |
+          $figures = @(
+            'paper_figures\figure_1_b1_residual_stop_time.svg',
+            'paper_figures\figure_2_ctw_positive_control.svg',
+            'paper_figures\figure_3_baseline_ladder_bits.svg'
+          )
+          foreach ($figure in $figures) {
+            if (!(Test-Path $figure)) {
+              throw "missing generated figure: $figure"
+            }
+          }
+
+      - name: Ensure generated report is committed
+        shell: pwsh
+        run: |
+          git diff --exit-code -- experiments\final_metrics.json experiments\final_report.md
