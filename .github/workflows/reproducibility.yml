@@ -39,7 +39,8 @@ jobs:
             experiments\rpi_runtime_estimate.py `
             experiments\rpi_final_report.py `
             experiments\rpi_paper_figures.py `
-            experiments\validate_paper_artifacts.py
+            experiments\validate_paper_artifacts.py `
+            experiments\rpi_robustness_audit.py
 
       - name: Regenerate report from pinned artifacts
         shell: pwsh
@@ -47,6 +48,9 @@ jobs:
 
       - name: Validate pinned paper artifacts
         run: python experiments\validate_paper_artifacts.py
+
+      - name: Audit paper-scale robustness
+        run: python experiments\rpi_robustness_audit.py
 
       - name: Generate paper figures
         run: python experiments\rpi_paper_figures.py
