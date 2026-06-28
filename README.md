@@ -1,8 +1,7 @@
 # Residual Predictive Information of Prime Gaps
 
-This repository contains a research-note formulation and reproducible
-experiments for measuring residual predictive information in consecutive prime
-gaps.
+This repository contains a paper-facing formulation and reproducible experiments
+for measuring residual predictive information in consecutive prime gaps.
 
 The central statistic is the prequential per-gap code gain
 
@@ -17,8 +16,8 @@ the null model.
 
 ## Current Empirical Status
 
-The paper-scale suite is now complete for the main tests through
-`X = 2^26` with `200` null replicates/checkpoints:
+The paper-scale suite is complete for the main tests through `X = 2^26` with
+`200` null replicates/checkpoints:
 
 - `B1(11)` bucket residual with stop-time synthetic nulls.
 - `rank_mod_64` CTW residual control with stop-time synthetic nulls.
@@ -32,6 +31,28 @@ against the weak `B0` baseline, but that signal disappears once the arithmetic
 wheel-first-hit baseline `B1(11)` is used. This supports the interpretation
 that the detected structure is arithmetic baseline structure, not robust
 residual sequential information.
+
+## Paper Framing
+
+The repo is now organized for a paper with a negative/methodological claim:
+
+> A prequential residual-coding protocol detects strong missing arithmetic
+> structure under weak baselines, but under the tested online residual
+> predictors it finds no robust residual predictive information beyond the
+> wheel-first-hit baseline `B1(11)` up to `X = 2^26`.
+
+The paper should be framed as a reproducible protocol and finite-scale
+falsification study, not as a proof that residual predictive information is
+absent.
+
+Paper-facing files:
+
+- `paper_grade_theory.md`: theory note updated for the completed paper-scale
+  result.
+- `paper_draft.md`: manuscript skeleton and claim discipline.
+- `paper_tables.md`: paper-ready result tables.
+- `experiments/rpi_paper_figures.py`: reproducible SVG figure generator.
+- `paper_figures/README.md`: figure-generation instructions.
 
 ## Paper-Scale Headline Results
 
@@ -71,6 +92,12 @@ Compile all scripts and regenerate the final report from existing artifacts:
 powershell -ExecutionPolicy Bypass -File experiments\run_final_suite.ps1 -SkipRuns
 ```
 
+Generate paper SVG figures from the committed paper-scale artifacts:
+
+```powershell
+python experiments\rpi_paper_figures.py
+```
+
 The full final-suite script still reruns the smaller pilot/control suite before
 regenerating the report. The paper-scale artifacts above were generated as
 long, checkpointed batch runs. See `paper_run_plan.md` for the exact
@@ -78,7 +105,9 @@ paper-scale commands and resume protocol.
 
 ## Main Files
 
-- `paper_grade_theory.md`: research-note formulation.
+- `paper_grade_theory.md`: paper-facing formulation.
+- `paper_draft.md`: manuscript skeleton and recommended framing.
+- `paper_tables.md`: paper-ready tables.
 - `paper_run_plan.md`: completed paper-scale run plan and artifact protocol.
 - `experiments/final_report.md`: compact current results.
 - `experiments/final_metrics.json`: machine-readable current metrics.
@@ -86,6 +115,7 @@ paper-scale commands and resume protocol.
 - `experiments/results_summary.md`: older detailed experiment log and pilot
   interpretation.
 - `experiments/rpi_final_report.py`: final report generator.
+- `experiments/rpi_paper_figures.py`: paper figure generator.
 - `experiments/rpi_runtime_estimate.py`: estimate long-run wall time before
   launching paper-scale experiments.
 - `experiments/run_final_suite.ps1`: reproducibility driver for compilation,
@@ -96,7 +126,7 @@ paper-scale commands and resume protocol.
 - The main paper-scale results reach `X = 2^26`; they are empirical evidence at
   this range, not an asymptotic theorem.
 - The implemented `B2` families are finite prototypes, not canonical arithmetic
-  null models.
+  null models and not an exhaustion of possible tuple-corrected baselines.
 - No `B3`-style global analytic correction is implemented.
 - Some older auxiliary pilots use fixed-count nulls. The main paper-scale B1
   and CTW checks use stop-time nulls.
