@@ -1,72 +1,86 @@
-# Paper-Scale Experiment Plan
+# Paper-Scale Experiment Plan and Status
 
-Date: 2026-06-16.
+Date: 2026-06-28.
+
+## Status
+
+The first paper-scale suite has been completed and merged.
+
+Completed artifacts:
+
+- `experiments/paper_b1_y11_depth4_stop_time_x26_n200/`
+- `experiments/paper_ctw_rank64_depth1_stop_time_x26_n200/`
+- `experiments/paper_ladder_b0_b1_y11_x26_n200/`
+- `experiments/paper_logs/`
+
+All main runs use:
+
+- `min_exp = 12`
+- `max_exp = 26`
+- `train_windows = 3`
+- `nulls = 200`
+- `seed = 20260616`
+- checkpointed/resumable nulls
 
 ## Purpose
 
-The existing artifacts are pilot-scale.  The next run should not reduce
-quality to fit an interactive time budget.  It should instead lock a
-paper-scale suite and run it as a long batch job.
+The paper-scale suite fixes the main empirical question:
 
-## Current Machine
+> Does an online residual predictor detect positive residual predictive
+> information in consecutive prime gaps after the wheel-first-hit baseline
+> `B1(11)` has already absorbed known arithmetic structure?
 
-- CPU: Intel Core i7-7700HQ, 4 cores / 8 logical processors.
-- RAM: about 16 GB.
-- Free C: drive space during planning: about 25 GB.
+The result of this first suite is negative: no positive residual signal is
+detected beyond `B1(11)` through `X = 2^26`, while positive controls against
+`B0` pass.
 
-Timing probes on the existing scripts:
+## Completed Main Runs
 
-- `B1(11)` stop-time null to `X=2^22`, 12 nulls: about 160 seconds.
-- rank-mod CTW stop-time control to `X=2^20`, 12 nulls: about 58 seconds.
-
-## Minimum Paper-Scale Suite
-
-Use the same predeclared protocol for all main results:
-
-1. `B1(11)` bucket residual with stop-time nulls.
-2. rank-mod-64 CTW positive/negative control with stop-time nulls.
-3. B0/B1 exact baseline ladder on the same maximum dyadic range.
-4. Keep the existing B2 scans as prototype negative controls unless a new
-   canonical B2 model is introduced.
-
-Recommended first paper-scale target:
+### B1(11) bucket residual, stop-time null
 
 ```powershell
 python experiments\rpi_b1_u1.py --min-exp 12 --max-exp 26 --train-windows 3 --nulls 200 --null-mode stop-time --checkpoint-nulls --checkpoint-every-seconds 120 --y 11 --depth 4 --out experiments\paper_b1_y11_depth4_stop_time_x26_n200
-
-python experiments\rpi_ctw_symbol_ladder.py --min-exp 12 --max-exp 26 --train-windows 3 --symbolizer rank_mod --symbol-mod 64 --depth 1 --nulls 200 --null-mode stop-time --checkpoint-nulls --checkpoint-every-seconds 120 --out experiments\paper_ctw_rank64_depth1_stop_time_x26_n200
-
-python experiments\rpi_baseline_ladder.py --min-exp 12 --max-exp 26 --train-windows 3 --nulls 200 --checkpoint-nulls --checkpoint-every-seconds 120 --b1-y 11 --depth 4 --out experiments\paper_ladder_b0_b1_y11_x26_n200
 ```
 
-Resume after an interruption by rerunning the same command with `--resume`:
+Resume form:
 
 ```powershell
 python experiments\rpi_b1_u1.py --min-exp 12 --max-exp 26 --train-windows 3 --nulls 200 --null-mode stop-time --checkpoint-nulls --resume --checkpoint-every-seconds 120 --y 11 --depth 4 --out experiments\paper_b1_y11_depth4_stop_time_x26_n200
+```
 
+### rank_mod_64 CTW control, stop-time null
+
+```powershell
+python experiments\rpi_ctw_symbol_ladder.py --min-exp 12 --max-exp 26 --train-windows 3 --symbolizer rank_mod --symbol-mod 64 --depth 1 --nulls 200 --null-mode stop-time --checkpoint-nulls --checkpoint-every-seconds 120 --out experiments\paper_ctw_rank64_depth1_stop_time_x26_n200
+```
+
+Resume form:
+
+```powershell
 python experiments\rpi_ctw_symbol_ladder.py --min-exp 12 --max-exp 26 --train-windows 3 --symbolizer rank_mod --symbol-mod 64 --depth 1 --nulls 200 --null-mode stop-time --checkpoint-nulls --resume --checkpoint-every-seconds 120 --out experiments\paper_ctw_rank64_depth1_stop_time_x26_n200
+```
 
+### B0/B1 exact baseline ladder
+
+```powershell
+python experiments\rpi_baseline_ladder.py --min-exp 12 --max-exp 26 --train-windows 3 --nulls 200 --checkpoint-nulls --checkpoint-every-seconds 120 --b1-y 11 --depth 4 --out experiments\paper_ladder_b0_b1_y11_x26_n200
+```
+
+Resume form:
+
+```powershell
 python experiments\rpi_baseline_ladder.py --min-exp 12 --max-exp 26 --train-windows 3 --nulls 200 --checkpoint-nulls --resume --checkpoint-every-seconds 120 --b1-y 11 --depth 4 --out experiments\paper_ladder_b0_b1_y11_x26_n200
 ```
 
-Estimated wall time on the current machine:
-
-- `B1(11)` stop-time, `X=2^26`, 200 nulls: about 9.3 hours.
-- rank-mod CTW stop-time, `X=2^26`, 200 nulls: about 12.4 hours.
-- Full main suite above: roughly one day, allowing overhead and thermal
-  throttling.
-
-Do not run this interactively under a 20 minute budget.
-
 ## Artifact Rules
 
-- Write paper-scale outputs to new `experiments/paper_*` directories.
-- For long null runs, use `--checkpoint-nulls`; each completed null replicate
-  is appended to a checkpoint CSV and can be resumed with `--resume`.
-- After a run completes, update `experiments/final_manifest.json` deliberately.
-- Do not let `rpi_final_report.py` discover result directories implicitly.
-- Keep pilot artifacts available, but do not mix them with paper-scale
-  artifacts in the same final report.
+- Paper-scale outputs live in `experiments/paper_*` directories.
+- Long null runs use `--checkpoint-nulls`; each completed null replicate is
+  appended to a checkpoint CSV and can be resumed with `--resume`.
+- `experiments/final_manifest.json` pins the artifacts used in the compact
+  final report.
+- Pilot artifacts remain available, but the headline final report should use
+  paper-scale artifacts for the main claim.
 
 ## Review-Facing Criteria
 
@@ -79,5 +93,6 @@ hold:
 - The gain persists over increasing dyadic windows.
 - Tuning is chronological; oracle rows remain diagnostics only.
 
-If the paper-scale suite remains negative, the publishable claim is the
-protocol plus a negative result at the tested scale.
+The first paper-scale suite does not meet these criteria for a positive claim.
+The publishable claim is the protocol plus a negative result at the tested
+scale.
