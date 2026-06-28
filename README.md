@@ -47,14 +47,17 @@ absent.
 
 Paper-facing files:
 
+- `paper_manuscript_v1.md`: first full manuscript draft and canonical paper
+  starting point.
 - `paper_grade_theory.md`: theory note updated for the completed paper-scale
   result.
-- `paper_draft.md`: manuscript skeleton and claim discipline.
 - `paper_tables.md`: paper-ready result tables.
 - `experiments/rpi_paper_figures.py`: reproducible SVG figure generator.
+- `paper_figures/README.md`: figure-generation instructions.
+- `paper_figures/*.svg`: generated paper figures from the committed
+  paper-scale artifacts.
 - `experiments/rpi_robustness_audit.py`: endpoint and cross-exponent robustness
   audit over the pinned paper-scale artifacts.
-- `paper_figures/README.md`: figure-generation instructions.
 
 ## Paper-Scale Headline Results
 
@@ -140,10 +143,12 @@ for the exact paper-scale commands and resume protocol.
 
 ## Main Files
 
+- `paper_manuscript_v1.md`: first full manuscript draft and canonical paper
+  starting point.
 - `paper_grade_theory.md`: paper-facing formulation.
-- `paper_draft.md`: manuscript skeleton and recommended framing.
 - `paper_tables.md`: paper-ready tables.
 - `paper_run_plan.md`: completed paper-scale run plan and artifact protocol.
+- `paper_figures/`: generated SVG paper figures and figure instructions.
 - `experiments/final_report.md`: compact current results.
 - `experiments/final_metrics.json`: machine-readable current metrics.
 - `experiments/final_manifest.json`: pinned artifact manifest.
