@@ -58,8 +58,8 @@ runs. The final report should only use artifacts pinned in
 
 ## CI checks
 
-`.github/workflows/reproducibility.yml` runs on pull requests and pushes to
-`main`. It checks that:
+`.github/workflows/reproducibility.yml` runs on branch pushes and pull requests
+targeting `main`. It checks that:
 
 - Python dependencies install cleanly;
 - experiment, report, figure, and validation scripts compile;
