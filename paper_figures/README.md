@@ -12,7 +12,7 @@ For each figure, the script writes three formats:
 
 - `.pdf`: primary paper/manuscript vector format.
 - `.svg`: repository/web vector format.
-- `.png`: high-resolution preview/fallback format.
+- `.png`: preview/fallback format.
 
 Expected outputs:
 
