@@ -52,6 +52,8 @@ Paper-facing files:
 - `paper_draft.md`: manuscript skeleton and claim discipline.
 - `paper_tables.md`: paper-ready result tables.
 - `experiments/rpi_paper_figures.py`: reproducible SVG figure generator.
+- `experiments/rpi_robustness_audit.py`: endpoint and cross-exponent robustness
+  audit over the pinned paper-scale artifacts.
 - `paper_figures/README.md`: figure-generation instructions.
 
 ## Paper-Scale Headline Results
@@ -93,8 +95,8 @@ python -m pip install -r requirements.txt
 ```
 
 Compile all scripts, regenerate the final report from existing pinned artifacts,
-and validate required artifact, metadata, checkpoint, and headline-metric
-consistency:
+and validate required artifact, metadata, checkpoint, headline-metric, and
+cross-exponent robustness consistency:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File experiments\run_final_suite.ps1 -SkipRuns
@@ -104,6 +106,12 @@ Run the artifact validator directly:
 
 ```powershell
 python experiments\validate_paper_artifacts.py
+```
+
+Run the paper-scale robustness audit directly:
+
+```powershell
+python experiments\rpi_robustness_audit.py
 ```
 
 Generate paper SVG figures from the committed paper-scale artifacts:
@@ -123,8 +131,12 @@ for the exact paper-scale commands and resume protocol.
 - `experiments/validate_paper_artifacts.py` checks that required paper-scale
   artifacts exist, reach `X = 2^26`, have 200 null checkpoints, cover the
   expected dyadic exponents, and agree with `experiments/final_metrics.json`.
+- `experiments/rpi_robustness_audit.py` checks that the negative result is not
+  an endpoint-only accident: B1 residuals stay inside stop-time null bands
+  across exponents, the B0 positive control separates, and the B1 ladder remains
+  better than B0 across the tested range.
 - `.github/workflows/reproducibility.yml` runs compilation, report regeneration,
-  artifact validation, and figure generation in CI.
+  artifact validation, robustness auditing, and figure generation in CI.
 
 ## Main Files
 
@@ -137,6 +149,8 @@ for the exact paper-scale commands and resume protocol.
 - `experiments/final_manifest.json`: pinned artifact manifest.
 - `experiments/validate_paper_artifacts.py`: reproducibility validator for
   pinned paper artifacts and metrics.
+- `experiments/rpi_robustness_audit.py`: cross-exponent qualitative robustness
+  audit for the paper-scale conclusion.
 - `experiments/results_summary.md`: older detailed experiment log and pilot
   interpretation.
 - `experiments/rpi_final_report.py`: final report generator.
@@ -144,7 +158,8 @@ for the exact paper-scale commands and resume protocol.
 - `experiments/rpi_runtime_estimate.py`: estimate long-run wall time before
   launching paper-scale experiments.
 - `experiments/run_final_suite.ps1`: reproducibility driver for compilation,
-  optional pilot reruns, report generation, and artifact validation.
+  optional pilot reruns, report generation, artifact validation, and robustness
+  auditing.
 
 ## Limitations
 
