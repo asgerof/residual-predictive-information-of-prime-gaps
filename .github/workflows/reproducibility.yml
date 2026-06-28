@@ -59,9 +59,15 @@ jobs:
         shell: pwsh
         run: |
           $figures = @(
+            'paper_figures\figure_1_b1_residual_stop_time.pdf',
             'paper_figures\figure_1_b1_residual_stop_time.svg',
+            'paper_figures\figure_1_b1_residual_stop_time.png',
+            'paper_figures\figure_2_ctw_positive_control.pdf',
             'paper_figures\figure_2_ctw_positive_control.svg',
-            'paper_figures\figure_3_baseline_ladder_bits.svg'
+            'paper_figures\figure_2_ctw_positive_control.png',
+            'paper_figures\figure_3_baseline_ladder_bits.pdf',
+            'paper_figures\figure_3_baseline_ladder_bits.svg',
+            'paper_figures\figure_3_baseline_ladder_bits.png'
           )
           foreach ($figure in $figures) {
             if (!(Test-Path $figure)) {
