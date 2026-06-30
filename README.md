@@ -3,6 +3,8 @@
 This repository contains a paper-facing formulation and reproducible experiments
 for measuring residual predictive information in consecutive prime gaps.
 
+Archived release: `v0.1.0`, DOI `10.5281/zenodo.21073161`.
+
 The central statistic is the prequential per-gap code gain
 
 \[
@@ -53,7 +55,7 @@ Paper-facing files:
 - `REPRODUCING.md`: fresh-clone validation guide separating quick artifact
   validation from long simulation reruns.
 - `ARCHIVAL_RELEASE.md`: version-tag, GitHub release, DOI, and citation metadata
-  guide.
+  maintenance guide.
 - `paper_related_work_positioning.md`: reviewer-facing related-work and claim
   positioning note for the introduction, discussion, or cover letter.
 - `paper_manuscript_v1.md`: first full manuscript draft and canonical Markdown
@@ -72,17 +74,17 @@ Paper-facing files:
 - `experiments/rpi_robustness_audit.py`: endpoint and cross-exponent robustness
   audit over the pinned paper-scale artifacts.
 
-## Publication Readiness Metadata
+## Citation and Publication Metadata
 
-The repository now includes publication/reuse metadata:
+The repository includes publication/reuse metadata:
 
 - `LICENSE`: MIT license for reuse of the repository contents.
-- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and pointing
-  to the repository.
-- `ARCHIVAL_RELEASE.md`: release-note and DOI update procedure.
+- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich, version
+  `0.1.0`, release date `2026-06-30`, and DOI `10.5281/zenodo.21073161`.
+- `ARCHIVAL_RELEASE.md`: release-note and DOI maintenance procedure for future
+  versions.
 
-Before public release or archiving, update `CITATION.cff` with any final DOI,
-version tag, publication date, or paper identifier.
+Use the DOI-linked release when citing the archived repository record.
 
 ## Paper-Scale Headline Results
 
@@ -218,18 +220,3 @@ for the exact paper-scale commands and resume protocol.
   interpretation.
 - `experiments/rpi_final_report.py`: final report generator.
 - `experiments/rpi_paper_figures.py`: paper figure generator.
-- `experiments/rpi_runtime_estimate.py`: estimate long-run wall time before
-  launching paper-scale experiments.
-- `experiments/run_final_suite.ps1`: reproducibility driver for compilation,
-  optional pilot reruns, report generation, artifact validation, and robustness
-  auditing.
-
-## Limitations
-
-- The main paper-scale results reach `X = 2^26`; they are empirical evidence at
-  this range, not an asymptotic theorem.
-- The implemented `B2` families are finite prototypes, not canonical arithmetic
-  null models and not an exhaustion of possible tuple-corrected baselines.
-- No `B3`-style global analytic correction is implemented.
-- Some older auxiliary pilots use fixed-count nulls. The main paper-scale B1
-  and CTW checks use stop-time nulls.
