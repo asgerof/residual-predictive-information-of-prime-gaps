@@ -354,9 +354,9 @@ The paper-scale experiments use dyadic windows $X=2^m$ through $m=26$. The main 
 
 The completed paper-scale suite consists of three experiment blocks. The first is the main $B_1(11)$ bucket-residual test, using buckets of $g/\log p$, a depth-4 finite-depth Markov bucket predictor in a baseline/residual mixture, stop-time nulls, and 200 null replicates. The second is the rank-mod-64 CTW control, evaluated under both $B_0$ and $B_1(11)$, using depth 1, stop-time nulls, and 200 null replicates. The third is the exact $B_0/B_1$ baseline ladder, comparing exact baseline code lengths under $B_0$ and $B_1(11)$.
 
-The repository pins the paper-scale artifacts in \texttt{experiments/final\_manifest.json}, derives headline metrics in \texttt{experiments/final\_metrics.json}, regenerates a compact report in \texttt{experiments/final\_report.md}, validates artifact completeness and consistency using \texttt{experiments/validate\_paper\_artifacts.py}, audits cross-exponent robustness using \texttt{experiments/rpi\_robustness\_audit.py}, and generates paper figures using \texttt{experiments/rpi\_paper\_figures.py}. These checks are intended to make the empirical claim reproducible from committed artifacts without rerunning the long simulations.
+The repository pins the paper-scale artifact record in a final manifest, derives the headline metrics from that record, regenerates a compact report, validates artifact completeness and metric consistency, audits cross-exponent robustness, and regenerates all manuscript figures. These checks are intended to make the empirical claim reproducible from committed artifacts without rerunning the long simulations.
 
-Exact machine-readable values are preserved in \texttt{experiments/final\_metrics.json}; the manuscript rounds some displayed values for readability.
+Exact values are preserved in the machine-readable final metrics file; the manuscript rounds some displayed values for readability.
 
 \section{Results}
 
