@@ -1,4 +1,5 @@
 name: Apply final proofreading snippets
+# trigger: 2026-06-30T06-apply
 
 on:
   push:
