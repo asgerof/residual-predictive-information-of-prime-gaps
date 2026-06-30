@@ -1,0 +1,3 @@
+Temporary PR trigger for GitHub Actions manuscript build.
+Created to run Manuscript build after final proofreading edits.
+Safe to delete after CI completes.
