@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   artifact-checks:
     runs-on: windows-latest
@@ -73,6 +76,25 @@ jobs:
             if (!(Test-Path $figure)) {
               throw "missing generated figure: $figure"
             }
+            $bytes = (Get-Item $figure).Length
+            if ($bytes -lt 2000) {
+              throw "generated figure looks too small to be real output: $figure ($bytes bytes)"
+            }
+          }
+
+      - name: Commit generated paper figures
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add paper_figures/*.pdf paper_figures/*.svg paper_figures/*.png
+          git diff --cached --quiet --exit-code
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "No generated figure changes to commit."
+          } else {
+            git commit -m "Add generated paper figure outputs [skip ci]"
+            git push
           }
 
       - name: Ensure generated report is committed
