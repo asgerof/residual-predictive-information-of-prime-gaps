@@ -115,7 +115,7 @@ In the implementation this sum is evaluated by admissible-rank counts. If
 \[
 \ell_b(p)=\max\{1,\lceil e_b\log p\rceil\},
 \qquad
-u_b(p)=\lceil e_{b+1}\log p\rceil-1,
+\nu_b(p)=\lceil e_{b+1}\log p\rceil-1,
 \]
 then, for a finite upper edge,
 \[
