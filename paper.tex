@@ -493,7 +493,9 @@ These limitations are not incidental. They are part of the claim discipline. The
 
 \section{Code and Data Availability}
 
-The code, manuscript sources, pinned paper-scale artifacts, generated figures, validation scripts, final metrics, and reproducibility workflow are stored in the repository \url{https://github.com/asgerof/residual-predictive-information-of-prime-gaps}. The paper-scale artifacts used for the reported numbers are pinned in \texttt{experiments/final\_manifest.json}. The compact final report is generated from the pinned manifest using \texttt{experiments/rpi\_final\_report.py}; the validation script \texttt{experiments/validate\_paper\_artifacts.py} checks required paper-scale CSVs, metadata, checkpoint counts, final metrics, and figure input contracts; and \texttt{experiments/rpi\_robustness\_audit.py} checks the cross-exponent qualitative conclusion. Long-running simulations are not rerun by default during validation; the committed artifacts are treated as the reproducible paper-scale record.
+The code, manuscript sources, pinned paper-scale artifacts, generated figures, validation scripts, final metrics, and reproducibility workflows are available in the repository \url{https://github.com/asgerof/residual-predictive-information-of-prime-gaps}.
+
+The reported numbers are pinned by the final manifest, and the compact report is regenerated from that manifest. The validation and robustness-audit scripts check artifact completeness, metric consistency, and the cross-exponent qualitative conclusion. Long simulations are not rerun by default; the committed artifacts are the reproducible paper-scale record.
 
 Before archival release, the repository should be tagged and archived with a DOI, and the citation metadata should be updated with the final DOI and version identifier.
 
