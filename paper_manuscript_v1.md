@@ -52,7 +52,9 @@ The claim is intentionally narrow. The paper does not claim that prime gaps cont
 
 ## 2. Observation Protocol and Admissible Information
 
-Let
+This section makes the protocol explicit enough to separate the statistical question from hidden reconstruction of the prime sequence.
+
+**Definition 1 (dyadic prime-gap block).** Let
 \[
 p_1<p_2<p_3<\cdots
 \]
@@ -68,25 +70,32 @@ and the corresponding gap block
 \[
 G_X=(g_n)_{n\in I_X}.
 \]
+All reported code lengths in this paper are evaluated on such dyadic blocks.
 
-All prediction is prequential. Before \(g_n\) is revealed, a predictor \(Q\) must assign a probability distribution
+**Definition 2 (online arithmetic baseline).** An arithmetic baseline \(B_k\) is an online predictive distribution. Before \(g_n\) is revealed, it assigns a probability
 \[
-Q_n(\cdot\mid\mathcal F_{n,k})
+B_{k,n}(g\mid\mathcal F_{n,k})
 \]
-using only information available at that time. The information field \(\mathcal F_{n,k}\) depends on the baseline level \(k\). The prequential code length is
+to each possible next gap \(g\). The information field \(\mathcal F_{n,k}\) contains only information available before \(g_n\) is revealed, together with the arithmetic features declared at baseline level \(k\). For each \(n\), the baseline is normalized:
+\[
+\sum_g B_{k,n}(g\mid\mathcal F_{n,k})=1.
+\]
+
+**Definition 3 (prequential code length).** For any online predictor \(Q\), define
 \[
 L_Q(G_X)=\sum_{n\in I_X}-\log_2 Q_n(g_n\mid\mathcal F_{n,k}),
 \]
-and the mean code length per gap is
+and the mean code length per gap
 \[
 h_Q(X)=\frac{L_Q(G_X)}{|I_X|}.
 \]
+The prediction assigned to \(g_n\) must be made before \(g_n\) is observed.
 
-The central statistic is
+**Definition 4 (residual code gain).** Given a baseline \(B_k\) and an admissible residual predictor \(U_k\), define
 \[
 R_k(X)=\frac{L_{B_k}(G_X)-L_{U_k}(G_X)}{|I_X|}.
 \]
-Its interpretation is:
+The interpretation is:
 
 - \(R_k(X)>0\): the residual predictor improves on the arithmetic baseline by \(R_k(X)\) bits per gap.
 - \(R_k(X)\approx 0\): no residual predictive information is detected at the tested scale and model resolution.
@@ -94,11 +103,19 @@ Its interpretation is:
 
 The statistic is relative. It is not an entropy of the primes and not an absolute randomness test.
 
-The admissibility rule is the main safeguard against overclaiming. At level \(k\), a predictor may use declared feature maps of the form
+**Definition 5 (admissible residual predictor).** A residual predictor \(U_k\) is admissible relative to \(B_k\) if it may use the same declared arithmetic information as \(B_k\), together with previous gap-derived symbols, but may not use future gaps, future primes, primality testing of candidate offsets in the target window, direct sieving outside the declared finite modulus set, or any table or compressed representation of the target block \(G_X\).
+
+A convenient sufficient form is
+\[
+U_k(g\mid\text{history},p_n)=U_s(s(g,p_n)\mid\text{history},p_n)B_k(g\mid p_n,s(g,p_n)),
+\]
+where \(s(g,p_n)\) is a declared residual symbol and \(B_k(g\mid p_n,s(g,p_n))\) is the baseline distribution conditional on that symbol. This allows the residual model to reweight declared symbols using past history without becoming a hidden prime generator.
+
+The admissibility rule is the main safeguard against overclaiming. Equivalently, at level \(k\), a predictor may use declared feature maps of the form
 \[
 \Phi_k(n,X,p_n,g_1,\ldots,g_{n-1}),
 \]
-but may not use future gaps, future primes, primality testing of candidate offsets in the target window, direct sieving outside the declared finite modulus set, or any table or compressed representation of the target gap block. In particular, the residual predictor may use previous residual symbols, earlier windows, the current scale, and the current prime \(p_n\), but it may not reconstruct the primes in \([X,2X)\) in order to predict the next gap.
+but may not use information that reconstructs the primes in \([X,2X)\) in order to predict the next gap.
 
 The following table summarizes the intended information discipline.
 
@@ -135,11 +152,15 @@ The wheel-corrected baseline \(B_1(y)\) incorporates congruence constraints modu
 \[
 W_y=\prod_{q\leq y}q.
 \]
-Conditional on \(p_n\bmod W_y\), many offsets \(m\) are impossible because
+For a current prime residue
 \[
-\gcd(p_n+m,W_y)>1.
+r=p_n\bmod W_y,
 \]
-The baseline places probability only on offsets that survive these finite congruence obstructions.
+define the wheel-admissible offset set
+\[
+\mathcal A_y(r)=\{m>0:\gcd(r+m,W_y)=1\}.
+\]
+Offsets outside \(\mathcal A_y(r)\) are impossible under the declared finite wheel because they are divisible by at least one prime \(q\leq y\). The baseline places probability zero on these forbidden offsets and positive probability only on admissible offsets.
 
 The implementation used for the headline result is \(B_1(11)\), for which
 \[
@@ -147,7 +168,23 @@ W=2\cdot3\cdot5\cdot7\cdot11=2310,
 \qquad
 \phi(W)=480.
 \]
-For each residue class of \(p_n\bmod W\), the baseline orders admissible offsets and uses a first-hit model on that ordered set. The hit probability is calibrated to match the local prime density. This model is still simple, but it absorbs a large amount of small-modulus arithmetic structure that a \(B_0\) residual learner can otherwise rediscover.
+For each residue class of \(p_n\bmod W\), the baseline orders admissible offsets by increasing size and uses a first-hit model on that ordered set. The hit probability is calibrated from the declared local scale information before the target gap is evaluated. For each current residue class, the resulting distribution is normalized over the ordered admissible offsets:
+\[
+\sum_{m\in\mathcal A_y(r)} B_{1,n}(m\mid p_n\bmod W_y=r)=1.
+\]
+
+The role of \(B_1(y)\) is not to model all arithmetic structure in prime gaps. Its narrower role is to remove the most elementary finite congruence obstructions before any residual learner is credited with predictive gain. The residual test is therefore a test beyond this declared wheel-first-hit baseline, not beyond all possible Hardy--Littlewood or global analytic corrections.
+
+The manuscript and implementation should be read with the following support and normalization discipline:
+
+1. forbidden offsets receive probability zero;
+2. admissible offsets receive nonnegative probability;
+3. the assigned probabilities sum to one for each current residue class;
+4. the hit/hazard parameter is fixed before evaluating the target gap;
+5. the calibration uses only declared local scale information;
+6. the residual predictor preserves the baseline distribution conditional on the residual symbol.
+
+This model is still simple, but it absorbs a large amount of small-modulus arithmetic structure that a \(B_0\) residual learner can otherwise rediscover.
 
 ### 3.3 Higher-order baselines
 
@@ -210,8 +247,6 @@ For each baseline, synthetic null sequences are generated from the same baseline
 
 Stop-time nulls are preferable for the present question because the number of gaps in a window is itself part of the stochastic behavior induced by the baseline. Fixed-count nulls can be useful diagnostics, but the main significance comparison should not condition away endpoint behavior unless that conditioning is explicitly intended.
 
-The empirical p-values reported here are finite-null reference quantities, not asymptotic significance claims. With 200 null replicates, they are adequate for distinguishing ordinary null-level behavior from large departures, but they should not be used to claim extremely small tail probabilities. The headline evidence is therefore the combination of code-gain effect sizes, null-band placement, cross-exponent behavior, and positive-control behavior.
-
 A positive residual-information claim would require all of the following:
 
 1. positive code gain beyond \(B_1(11)\);
@@ -222,6 +257,17 @@ A positive residual-information claim would require all of the following:
 6. chronological tuning only.
 
 The completed paper-scale suite does not satisfy these criteria. The positive-control signal is strong under \(B_0\), but it disappears under \(B_1(11)\).
+
+The paper's claim discipline is summarized in Table 1.
+
+| Statement | Paper status |
+|---|---|
+| The protocol detects omitted arithmetic structure under a weak local-density baseline. | Supported by the \(B_0\) positive control. |
+| Positive residual predictive information survives \(B_1(11)\). | Not supported at \(X\leq2^{26}\) by the tested residual predictors. |
+| Prime gaps contain no residual information. | Not claimed. |
+| The finite-scale result proves an asymptotic theorem. | Not claimed. |
+| Implemented \(B_2\)-style diagnostics exhaust tuple-corrected arithmetic baselines. | Not claimed. |
+| The contribution is a falsifiable empirical protocol plus a controlled negative result. | Main framing. |
 
 ## 6. Experiments and Reproducibility
 
@@ -360,7 +406,7 @@ This framing is deliberately conservative. A future residual model could still o
 
 The limitations are substantial and define the scope of the paper.
 
-First, the result is finite-scale. The computations reach \(X=2^{26}\), not an asymptotic regime. Nothing here proves that residual predictive information vanishes as \(X\to\infty\).
+First, the result is finite-scale. The computations reach \(X=2^{26}\), not an asymptotic regime. Nothing here proves that residual predictive information vanishes as \(X\to\infty\). The scale is nevertheless meaningful for the stated purpose: it is large enough for the residual machinery to detect omitted wheel structure under \(B_0\), and the same machinery then fails to produce positive residual gain under \(B_1(11)\).
 
 Second, the residual model classes are limited. The paper tests bucket-based Markov residuals and rank-mod-64 CTW-style residuals. Other symbolizations, deeper context models, continuous predictors, neural sequence models, or analytically motivated residual models could behave differently. Any positive result from such a model would need to pass the same prequential and synthetic-null criteria.
 
