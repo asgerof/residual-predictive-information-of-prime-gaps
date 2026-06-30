@@ -1,0 +1,62 @@
+# Related-Work and Positioning Note
+
+This note records the intended reviewer-facing positioning of the paper. It can be used as a source for further edits to the introduction or cover letter.
+
+## Core distinction
+
+The paper is not primarily another search for correlations, biases, or distributional anomalies in prime gaps. It asks a narrower predictive question:
+
+> After a declared arithmetic baseline has already been supplied, does previous prime-gap history improve online prediction of the next gap enough to pay for a penalized residual predictor?
+
+That distinction is the main novelty. The protocol treats apparent predictability as meaningful only relative to an explicit baseline and an online information discipline.
+
+## Relationship to probabilistic prime models
+
+Classical and modern probabilistic models of the primes, including Cramer-type models, random-sieve models, Hardy--Littlewood tuple heuristics, and large-gap models, provide the arithmetic null background. This paper does not try to replace those models. It uses them as the motivation for a hierarchy of declared baselines:
+
+- `B0`: local-density/parity-level baseline;
+- `B1(11)`: finite small-prime wheel-first-hit baseline through modulus `2*3*5*7*11`;
+- possible future `B2`: canonical tuple-corrected baselines;
+- possible future `B3`: predetermined global analytic corrections.
+
+The paper's negative result is explicitly beyond the implemented `B1(11)` baseline and the tested residual predictors. It does not claim to rule out all higher-order arithmetic effects.
+
+## Relationship to biases in consecutive primes
+
+Work on biases in consecutive primes shows that consecutive-prime structure can deviate from naive independence or simple local-density expectations. That literature motivates the need for stronger arithmetic baselines before interpreting a residual signal. In the present repo, the strong positive control against `B0` is consistent with this warning: if the baseline is too weak, a residual learner can detect omitted arithmetic structure. The central result is that this apparent residual signal disappears when the `B1(11)` wheel-first-hit baseline is used.
+
+## Relationship to entropy, compression, and correlation studies
+
+Prior entropy or correlation studies can ask whether prime-derived sequences exhibit statistical structure. This paper instead uses prequential code length: the predictor must assign probability before the next gap is revealed, and any residual learner must pay its own complexity cost. The target is therefore not absolute randomness or compressibility of the primes. The target is residual online predictive gain after declared arithmetic information has been supplied.
+
+## Relationship to universal coding and MDL
+
+The residual statistic is an operational code-length comparison. Positive residual predictive information means that an online residual model shortens the prequential code relative to the declared arithmetic baseline. Null-level or negative results mean that the residual model did not improve prediction enough to overcome its own penalty. This connects the paper to prequential analysis, universal coding, and MDL-style model comparison, but with arithmetic admissibility constraints specific to prime gaps.
+
+## Suggested introduction insertion
+
+A compact insertion for the introduction could be:
+
+```latex
+The present question differs from existing studies of prime-gap correlations, consecutive-prime biases, or entropy-like statistics. Those studies ask whether prime-derived sequences display structure relative to a chosen statistical summary or heuristic model. Here the target is operational and relative: before each gap is revealed, a declared arithmetic baseline has already assigned a probability distribution, and a residual learner receives credit only if previous gap history shortens the prequential code after that baseline and after its own complexity penalty. Thus the experiment is not an absolute randomness test for the primes. It is a test of residual online predictive gain after specified arithmetic information has been made explicit.
+```
+
+Another compact insertion for the discussion could be:
+
+```latex
+The positive-control result under `B0` is also a caution about interpreting empirical structure in prime gaps. A flexible residual predictor can detect structure when the baseline omits small-prime congruence information. The relevant question is therefore not whether a pattern can be found, but whether it survives a declared arithmetic null model. In the present suite the tested signal does not survive `B1(11)`, which is why the conclusion is framed as a finite-scale falsification of this residual signal rather than as evidence for absence of all residual structure.
+```
+
+## Claim boundary to preserve
+
+The strongest safe claim is:
+
+> A prequential residual-coding protocol detects strong missing arithmetic structure under weak baselines, but under the tested online residual predictors it finds no robust positive residual predictive information beyond the `B1(11)` wheel-first-hit baseline up to `X = 2^26`.
+
+Do not strengthen this into any of the following:
+
+- prime gaps contain no residual information;
+- the result proves an asymptotic theorem;
+- `B1(11)` is a complete arithmetic model;
+- the implemented `B2` diagnostics exhaust tuple-corrected baselines;
+- 200 null replicates support extreme-tail claims.
