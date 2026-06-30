@@ -1,6 +1,6 @@
 # Formal Paper Core
 
-This note collects the most important reviewer-facing material that should be integrated into the manuscript before submission. It is intentionally conservative: it strengthens the definitions and claim discipline without changing any experiment outputs.
+This note collects the most important reviewer-facing material that should be integrated into the manuscript before submission. It is intentionally conservative: it strengthens the definitions, the \(B_1(11)\) threshold defense, and the claim discipline without changing any experiment outputs.
 
 ## 1. Formal Definitions to Integrate
 
@@ -86,18 +86,47 @@ Suggested manuscript wording:
 
 > The role of \(B_1(y)\) is not to model all arithmetic structure in prime gaps. Its narrower role is to remove the most elementary finite congruence obstructions before any residual learner is credited with predictive gain. The residual test is therefore a test beyond this declared wheel-first-hit baseline, not beyond all possible Hardy--Littlewood or global analytic corrections.
 
-## 3. Claim-Discipline Table for the Manuscript
+## 3. Why \(B_1(11)\) Is the Main Falsification Threshold
+
+The central reviewer risk is that \(B_1(11)\) could be mistaken for a claim of arithmetic completeness. The manuscript should make the opposite point explicit: \(B_1(11)\) is not chosen because it is the strongest imaginable null model. It is chosen because it is the first tested level in the hierarchy where the dominant elementary wheel obstruction has been supplied to the baseline rather than left for the residual learner to rediscover.
+
+A concise defense has four parts.
+
+1. **It corrects the known defect of \(B_0\).** The local-density baseline \(B_0\) captures the approximate scale of prime gaps but not the small-modulus support restrictions beyond parity. A positive residual code gain against \(B_0\) is therefore ambiguous: it may be genuine sequential information, or it may simply be omitted congruence structure.
+
+2. **It supplies a proper online finite-wheel distribution.** \(B_1(11)\) uses only the current prime residue modulo \(2310\), the ordered offsets coprime to \(2310\), and a local first-hit probability fixed before the target gap is observed. Forbidden offsets receive probability zero, admissible offsets receive geometric first-hit probabilities, and the distribution normalizes over the admissible sequence.
+
+3. **It creates a meaningful positive-control comparison.** The same residual machinery separates strongly from \(B_0\) but not from \(B_1(11)\). This is exactly the contrast needed to argue that the \(B_0\) signal was largely omitted wheel structure, not robust residual sequential information.
+
+4. **It preserves a narrow claim.** A null result beyond \(B_1(11)\) does not say that Hardy--Littlewood tuple corrections, larger wheels, global analytic corrections, or other residual models would also give null results. It says only that, after this explicit finite-wheel first-hit baseline is supplied, the tested online residual predictors do not obtain positive code gain through \(X\leq2^{26}\).
+
+Suggested manuscript paragraph:
+
+> The headline threshold \(B_1(11)\) is deliberately not an exhaustive arithmetic model. It is the first tested baseline that supplies the residual learner with the elementary finite-wheel obstruction omitted by \(B_0\): the current residue modulo \(2310\), the corresponding sequence of admissible offsets, and a proper online first-hit law on that sequence. This makes it a useful falsification threshold. If the large positive residual gains found under \(B_0\) were evidence for robust sequential information, some trace of that gain should survive after the wheel obstruction is moved into the baseline. In the paper-scale experiments it does not. The resulting negative claim is therefore beyond \(B_1(11)\) and the tested residual symbolizations, not beyond all possible tuple-corrected or global analytic null models.
+
+Likely reviewer questions and safe answers:
+
+| Reviewer concern | Safe response |
+|---|---|
+| Why stop at primes up to 11? | Because the paper's central contrast is between a weak local-density baseline and an explicit finite-wheel first-hit baseline. Larger wheels are natural future robustness checks, but the present claim is calibrated to the declared \(B_1(11)\) threshold. |
+| Does \(B_1(11)\) include Hardy--Littlewood tuple corrections? | No. The paper should say this directly. The result is not a claim beyond all tuple-corrected baselines. |
+| Could another residual symbolization detect information beyond \(B_1(11)\)? | Possibly. The paper reports a negative result for the tested residual predictors, not a universal impossibility theorem. |
+| Why is the \(B_0\) positive control still useful? | It shows that the residual machinery is not inert. It detects omitted arithmetic structure when the baseline is intentionally too weak. |
+| Is the result asymptotic? | No. It is a finite-scale, reproducible, prequential falsification result through \(X\leq2^{26}\). |
+
+## 4. Claim-Discipline Table for the Manuscript
 
 | Statement | Paper status |
 |---|---|
 | The protocol detects omitted arithmetic structure under a weak local-density baseline. | Supported by the \(B_0\) positive control. |
+| \(B_1(11)\) removes the dominant elementary finite-wheel obstruction omitted by \(B_0\). | Supported by the explicit support/normalization construction and the B0-vs-B1 control comparison. |
 | Positive residual predictive information survives \(B_1(11)\). | Not supported at \(X\leq2^{26}\) by the tested residual predictors. |
 | Prime gaps contain no residual information. | Not claimed. |
 | The finite-scale result proves an asymptotic theorem. | Not claimed. |
 | Implemented \(B_2\)-style diagnostics exhaust tuple-corrected arithmetic baselines. | Not claimed. |
 | The contribution is a falsifiable empirical protocol plus a controlled negative result. | Main framing. |
 
-## 4. Minimum Correctness Tests to Add Next
+## 5. Minimum Correctness Tests to Add Next
 
 The current reproducibility checks validate artifacts and regenerate reports. Before submission, add a small unit-test layer that checks the mathematical core directly.
 
@@ -115,7 +144,7 @@ tests/test_final_metrics_recompute.py
 
 The most important tests are the \(B_1\) support/normalization tests and the final metrics recomputation test, because they defend the central negative result.
 
-## 5. Safe Abstract/Conclusion Language
+## 6. Safe Abstract/Conclusion Language
 
 Use language like this:
 
