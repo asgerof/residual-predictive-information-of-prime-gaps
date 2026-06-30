@@ -210,7 +210,7 @@ The baseline assumes a geometric first-hit law on this ordered admissible sequen
 \[
 \theta_y(p)=\operatorname{clip}\left(\frac{W_y}{\varphi_y\log p},10^{-12},1-10^{-12}\right),
 \]
-where the clipping only prevents degenerate floating-point probabilities. For an admissible offset $m$, let $k_y(p,m)=C_y(p,m). The wheel-first-hit probability assigned to the exact next gap $g=m$ is
+where the clipping only prevents degenerate floating-point probabilities. For an admissible offset $m$, let $k_y(p,m)=C_y(p,m)$. The wheel-first-hit probability assigned to the exact next gap $g=m$ is
 \[
 B_{1,y}(g=m\mid p)=(1-\theta_y(p))^{k_y(p,m)-1}\theta_y(p),
 \qquad \gcd(p+m,W_y)=1.
