@@ -1,1 +1,0 @@
-Trigger manuscript build for caption clarification check.
