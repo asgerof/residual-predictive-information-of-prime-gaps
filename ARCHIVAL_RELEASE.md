@@ -1,10 +1,21 @@
 # Archival Release Guide
 
-This repository is prepared for a conservative preprint or release package once the final validation checks have passed. The remaining DOI step must be performed through GitHub Releases plus Zenodo or another external archival provider.
+This repository now has an archival release for version `0.1.0`.
+
+Current release metadata:
+
+```text
+Version: v0.1.0
+DOI: 10.5281/zenodo.21073161
+Release date: 2026-06-30
+Author: Asger Othmar Frøhlich
+```
+
+The live citation metadata is stored in `CITATION.cff`, and the manuscript Code and Data Availability section points to the archived DOI. This file is kept as a maintenance guide for future release candidates, follow-up DOI-linked metadata updates, and submission checks.
 
 ## Release candidate checklist
 
-Before creating an archival release:
+Before creating any future archival release or submission update:
 
 1. Confirm the following GitHub Actions workflows are green on the release commit:
    - `Reproducibility`
@@ -14,24 +25,25 @@ Before creating an archival release:
 3. Confirm that `experiments/final_report.md` and `experiments/final_metrics.json` regenerate without a diff.
 4. Confirm the paper-scale artifact directories listed in `experiments/final_manifest.json` are present.
 5. Confirm the manuscript claim remains finite-scale and model-class-specific.
+6. Confirm that `CITATION.cff`, the README citation/DOI line, and the manuscript availability statement agree on the DOI, version, and release date.
 
-## Version tag
+## Current version tag
 
 The repository metadata currently targets version `0.1.0`.
 
-Suggested release tag:
+Current release tag:
 
 ```text
 v0.1.0
 ```
 
-Suggested release title:
+Current release title:
 
 ```text
 Residual Predictive Information in Prime Gaps v0.1.0
 ```
 
-Suggested release notes:
+Canonical release-note wording:
 
 ```markdown
 Initial paper-scale release for the residual predictive information of prime gaps study.
@@ -52,27 +64,26 @@ A prequential residual-coding protocol detects strong missing arithmetic structu
 This is a finite-scale empirical/methodological result. It is not an asymptotic theorem and not a claim that prime gaps contain no residual information.
 ```
 
-## DOI archival
+## DOI maintenance
 
-After creating the GitHub release, archive it with Zenodo or another DOI provider.
+For a future release, create the GitHub release first and archive it with Zenodo or another DOI provider. Once the DOI exists:
 
-Once a DOI exists:
-
-1. Add the DOI to `CITATION.cff`, for example:
+1. Update `CITATION.cff`, for example:
 
    ```yaml
    doi: "10.xxxx/zenodo.xxxxxxx"
    ```
 
-2. Keep or update:
+2. Update the version and release date if needed:
 
    ```yaml
-   version: "0.1.0"
-   date-released: "2026-06-30"
+   version: "0.1.1"
+   date-released: "YYYY-MM-DD"
    ```
 
-3. Update the manuscript's code/data availability statement to cite the archived DOI instead of only the GitHub repository.
-4. Commit those changes and, if needed, create a follow-up tag such as `v0.1.1` for the DOI-linked metadata update.
+3. Update the README DOI/citation line.
+4. Update the manuscript Code and Data Availability section if the archived DOI changes.
+5. Commit those changes and, if needed, create a follow-up tag for the DOI-linked metadata update.
 
 ## What cannot be inferred from the release
 
