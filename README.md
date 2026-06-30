@@ -56,8 +56,8 @@ Paper-facing files:
   result.
 - `paper_tables.md`: paper-ready result tables.
 - `paper_formal_core.md`: reviewer-facing formal definitions, claim-discipline
-  table, and `B1(11)` normalization/support checklist to integrate into the
-  manuscript.
+  table, `B1(11)` normalization/support checklist, and `B1(11)` threshold
+  defense to integrate into the manuscript.
 - `experiments/rpi_paper_figures.py`: reproducible figure generator.
 - `paper_figures/README.md`: figure-generation instructions.
 - `paper_figures/*.pdf`: primary paper/manuscript vector figures.
@@ -179,8 +179,8 @@ for the exact paper-scale commands and resume protocol.
   starting point.
 - `paper_grade_theory.md`: paper-facing formulation.
 - `paper_tables.md`: paper-ready tables.
-- `paper_formal_core.md`: formal definitions and reviewer-facing claim
-  discipline for manuscript integration.
+- `paper_formal_core.md`: formal definitions, `B1(11)` threshold defense, and
+  reviewer-facing claim discipline for manuscript integration.
 - `paper_run_plan.md`: completed paper-scale run plan and artifact protocol.
 - `paper_figures/`: figure output directory and instructions; generate PDF, SVG,
   and PNG figures from pinned artifacts using `experiments/rpi_paper_figures.py`.
