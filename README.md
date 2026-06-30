@@ -52,6 +52,9 @@ Paper-facing files:
 - `paper_grade_theory.md`: theory note updated for the completed paper-scale
   result.
 - `paper_tables.md`: paper-ready result tables.
+- `paper_formal_core.md`: reviewer-facing formal definitions, claim-discipline
+  table, and `B1(11)` normalization/support checklist to integrate into the
+  manuscript.
 - `experiments/rpi_paper_figures.py`: reproducible figure generator.
 - `paper_figures/README.md`: figure-generation instructions.
 - `paper_figures/*.pdf`: primary paper/manuscript vector figures.
@@ -59,6 +62,17 @@ Paper-facing files:
 - `paper_figures/*.png`: high-resolution preview/fallback figures.
 - `experiments/rpi_robustness_audit.py`: endpoint and cross-exponent robustness
   audit over the pinned paper-scale artifacts.
+
+## Publication Readiness Metadata
+
+The repository now includes publication/reuse metadata:
+
+- `LICENSE`: MIT license for reuse of the repository contents.
+- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and pointing
+  to the repository.
+
+Before public release or archiving, update `CITATION.cff` with any final DOI,
+version tag, publication date, or paper identifier.
 
 ## Paper-Scale Headline Results
 
@@ -153,6 +167,8 @@ for the exact paper-scale commands and resume protocol.
   starting point.
 - `paper_grade_theory.md`: paper-facing formulation.
 - `paper_tables.md`: paper-ready tables.
+- `paper_formal_core.md`: formal definitions and reviewer-facing claim
+  discipline for manuscript integration.
 - `paper_run_plan.md`: completed paper-scale run plan and artifact protocol.
 - `paper_figures/`: figure output directory and instructions; generate PDF, SVG,
   and PNG figures from pinned artifacts using `experiments/rpi_paper_figures.py`.

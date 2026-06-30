@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below."
+title: "Residual Predictive Information in Prime Gaps"
+authors:
+  - family-names: "Frøhlich"
+    given-names: "Asger Othmar"
+repository-code: "https://github.com/asgerof/residual-predictive-information-of-prime-gaps"
+date-released: "2026-06-30"
+version: "0.1.0"
+license: "MIT"
+keywords:
+  - prime gaps
+  - prequential prediction
+  - residual predictive information
+  - arithmetic null models
+  - universal coding
+  - minimum description length
+abstract: >-
+  A reproducible computational protocol for measuring residual predictive
+  information in consecutive prime gaps as penalized prequential code gain
+  relative to explicit arithmetic null models.
