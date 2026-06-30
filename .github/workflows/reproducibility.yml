@@ -43,7 +43,12 @@ jobs:
             experiments\rpi_final_report.py `
             experiments\rpi_paper_figures.py `
             experiments\validate_paper_artifacts.py `
-            experiments\rpi_robustness_audit.py
+            experiments\rpi_robustness_audit.py `
+            tests\test_b1_wheel_support.py `
+            tests\test_final_metrics_recompute.py
+
+      - name: Run core correctness tests
+        run: python -m unittest discover -s tests -v
 
       - name: Regenerate report from pinned artifacts
         shell: pwsh
