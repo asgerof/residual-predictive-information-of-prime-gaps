@@ -47,7 +47,10 @@ absent.
 
 Paper-facing files:
 
-- `paper_manuscript_v1.md`: first full manuscript draft and canonical paper
+- `paper.tex`: submission-oriented LaTeX manuscript source.
+- `references.bib`: BibTeX bibliography for `paper.tex`.
+- `SUBMISSION_CHECKLIST.md`: release, CI, manuscript-build, and archival checklist.
+- `paper_manuscript_v1.md`: first full manuscript draft and canonical Markdown
   starting point.
 - `paper_grade_theory.md`: theory note updated for the completed paper-scale
   result.
@@ -142,6 +145,12 @@ This writes PDF, SVG, and PNG copies of each figure. Use the PDF files for the
 paper/manuscript, SVG files for repository/web viewing, and PNG files for
 preview or fallback rendering.
 
+Build the submission manuscript if a TeX distribution is installed:
+
+```bash
+latexmk -pdf paper.tex
+```
+
 The full final-suite script still reruns the smaller pilot/control suite before
 regenerating the report when `-SkipRuns` is omitted. The paper-scale artifacts
 above were generated as long, checkpointed batch runs. See `paper_run_plan.md`
@@ -163,7 +172,10 @@ for the exact paper-scale commands and resume protocol.
 
 ## Main Files
 
-- `paper_manuscript_v1.md`: first full manuscript draft and canonical paper
+- `paper.tex`: submission-oriented LaTeX manuscript source.
+- `references.bib`: BibTeX bibliography for `paper.tex`.
+- `SUBMISSION_CHECKLIST.md`: release, CI, manuscript-build, and archival checklist.
+- `paper_manuscript_v1.md`: first full manuscript draft and canonical Markdown
   starting point.
 - `paper_grade_theory.md`: paper-facing formulation.
 - `paper_tables.md`: paper-ready tables.
