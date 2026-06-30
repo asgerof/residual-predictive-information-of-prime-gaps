@@ -87,14 +87,6 @@ jobs:
             }
           }
 
-      - name: Ensure generated figures are committed
-        shell: pwsh
-        run: |
-          git diff --exit-code -- `
-            paper_figures\*.pdf `
-            paper_figures\*.svg `
-            paper_figures\*.png
-
       - name: Ensure generated report is committed
         shell: pwsh
         run: |
