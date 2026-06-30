@@ -21,7 +21,11 @@ try {
         experiments\rpi_final_report.py `
         experiments\rpi_paper_figures.py `
         experiments\validate_paper_artifacts.py `
-        experiments\rpi_robustness_audit.py
+        experiments\rpi_robustness_audit.py `
+        tests\test_b1_wheel_support.py `
+        tests\test_final_metrics_recompute.py
+
+    python -m unittest discover -s tests -v
 
     if (-not $SkipRuns) {
         python experiments\rpi_b1_u1.py --min-exp 12 --max-exp 21 --train-windows 3 --nulls 12 --y 11 --depth 4 --out experiments\results_b1_y11_depth4_pilot
