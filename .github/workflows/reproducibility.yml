@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   artifact-checks:
@@ -87,20 +87,13 @@ jobs:
             }
           }
 
-      - name: Commit generated paper figures
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Ensure generated figures are committed
         shell: pwsh
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add paper_figures/*.pdf paper_figures/*.svg paper_figures/*.png
-          git diff --cached --quiet --exit-code
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "No generated figure changes to commit."
-          } else {
-            git commit -m "Add generated paper figure outputs [skip ci]"
-            git push
-          }
+          git diff --exit-code -- `
+            paper_figures\*.pdf `
+            paper_figures\*.svg `
+            paper_figures\*.png
 
       - name: Ensure generated report is committed
         shell: pwsh
