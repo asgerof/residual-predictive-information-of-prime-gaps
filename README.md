@@ -50,6 +50,12 @@ Paper-facing files:
 - `paper.tex`: submission-oriented LaTeX manuscript source.
 - `references.bib`: BibTeX bibliography for `paper.tex`.
 - `SUBMISSION_CHECKLIST.md`: release, CI, manuscript-build, and archival checklist.
+- `REPRODUCING.md`: fresh-clone validation guide separating quick artifact
+  validation from long simulation reruns.
+- `ARCHIVAL_RELEASE.md`: version-tag, GitHub release, DOI, and citation metadata
+  guide.
+- `paper_related_work_positioning.md`: reviewer-facing related-work and claim
+  positioning note for the introduction, discussion, or cover letter.
 - `paper_manuscript_v1.md`: first full manuscript draft and canonical Markdown
   starting point.
 - `paper_grade_theory.md`: theory note updated for the completed paper-scale
@@ -73,6 +79,7 @@ The repository now includes publication/reuse metadata:
 - `LICENSE`: MIT license for reuse of the repository contents.
 - `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and pointing
   to the repository.
+- `ARCHIVAL_RELEASE.md`: release-note and DOI update procedure.
 
 Before public release or archiving, update `CITATION.cff` with any final DOI,
 version tag, publication date, or paper identifier.
@@ -108,6 +115,12 @@ The compact final report is:
 - `experiments/paper_logs/`
 
 ## Reproduce and Validate
+
+For the reviewer-facing fresh-clone path, start with:
+
+```text
+REPRODUCING.md
+```
 
 Install the Python dependency used for figure generation:
 
@@ -151,6 +164,10 @@ Build the submission manuscript if a TeX distribution is installed:
 latexmk -pdf paper.tex
 ```
 
+The `Manuscript build` GitHub Actions workflow also regenerates figures, builds
+`paper.pdf`, checks that the PDF exists, and uploads it as a workflow artifact
+for manual inspection.
+
 The full final-suite script still reruns the smaller pilot/control suite before
 regenerating the report when `-SkipRuns` is omitted. The paper-scale artifacts
 above were generated as long, checkpointed batch runs. See `paper_run_plan.md`
@@ -169,12 +186,18 @@ for the exact paper-scale commands and resume protocol.
 - `.github/workflows/reproducibility.yml` runs compilation, report regeneration,
   artifact validation, robustness auditing, figure generation, and figure-output
   existence checks in CI.
+- `.github/workflows/manuscript-build.yml` regenerates manuscript figures, builds
+  `paper.pdf`, verifies that the PDF exists, and uploads the PDF as a workflow
+  artifact.
 
 ## Main Files
 
 - `paper.tex`: submission-oriented LaTeX manuscript source.
 - `references.bib`: BibTeX bibliography for `paper.tex`.
 - `SUBMISSION_CHECKLIST.md`: release, CI, manuscript-build, and archival checklist.
+- `REPRODUCING.md`: fresh-clone validation and reviewer reproducibility guide.
+- `ARCHIVAL_RELEASE.md`: release tag, DOI archival, and citation metadata guide.
+- `paper_related_work_positioning.md`: related-work/claim-positioning note.
 - `paper_manuscript_v1.md`: first full manuscript draft and canonical Markdown
   starting point.
 - `paper_grade_theory.md`: paper-facing formulation.

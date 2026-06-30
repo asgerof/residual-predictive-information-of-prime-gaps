@@ -18,6 +18,17 @@ python experiments\rpi_paper_figures.py
 
 A release/publication commit should have a visible green CI result rather than relying only on earlier local or skipped runs.
 
+## Fresh-clone reproducibility guide
+
+Use `REPRODUCING.md` as the reviewer-facing validation guide. It separates:
+
+- quick validation from committed/pinned artifacts;
+- manuscript figure regeneration;
+- manuscript PDF build;
+- long-running simulation reruns and resume protocol.
+
+The default reviewer path should validate the committed paper-scale record. It should not require rerunning the long simulations.
+
 ## Manuscript build
 
 Primary manuscript source:
@@ -56,17 +67,41 @@ Regenerate figures from pinned paper-scale artifacts with:
 python experiments\rpi_paper_figures.py
 ```
 
+The `Manuscript build` GitHub Actions workflow should also pass before release. It regenerates manuscript figures, builds `paper.pdf`, checks that the PDF exists, and uploads it as a workflow artifact for manual inspection.
+
+Manual PDF inspection should check:
+
+- figure placement and scaling;
+- table width and line wrapping;
+- citation and bibliography rendering;
+- unresolved LaTeX warnings or missing references;
+- consistency between the abstract, results table, and `experiments/final_metrics.json`.
+
+## Related-work and positioning pass
+
+Use `paper_related_work_positioning.md` as the reviewer-facing positioning note. Before submission, either integrate its compact insertion into the introduction/discussion or preserve the same distinction in the cover letter:
+
+- the paper is not an absolute randomness test for the primes;
+- the paper is not just a correlation, bias, entropy, or compression study;
+- the main object is residual online predictive gain after a declared arithmetic baseline and model-complexity penalty;
+- the positive `B0` control shows that omitted arithmetic structure can look like residual signal;
+- the negative `B1(11)` result is finite-scale and model-class-specific.
+
 ## Preprint/release steps
 
 Before an arXiv-style release:
 
 1. Confirm the `Reproducibility` workflow is green on the final PR or release commit.
-2. Build `paper.pdf` from `paper.tex` and inspect figures, references, captions, and table placement.
-3. Verify that `experiments/final_report.md` and `experiments/final_metrics.json` have no uncommitted regeneration diff.
-4. Create a version tag, for example `v0.1.0`.
-5. Archive the release on Zenodo or another DOI provider.
-6. Update `CITATION.cff` with the final DOI, release date, and version.
-7. In the manuscript, replace the repository-only availability statement with the archived DOI.
+2. Confirm the `Artifact validation` workflow is green on the final PR or release commit.
+3. Confirm the `Manuscript build` workflow is green on the final PR or release commit.
+4. Download the `paper-pdf` workflow artifact and inspect figures, references, captions, and table placement.
+5. Verify that `experiments/final_report.md` and `experiments/final_metrics.json` have no uncommitted regeneration diff.
+6. Create a version tag, for example `v0.1.0`.
+7. Archive the release on Zenodo or another DOI provider.
+8. Update `CITATION.cff` with the final DOI, release date, and version.
+9. In the manuscript, replace the repository-only availability statement with the archived DOI.
+
+See `ARCHIVAL_RELEASE.md` for suggested release notes and DOI metadata steps.
 
 ## Reviewer-facing caution points
 
