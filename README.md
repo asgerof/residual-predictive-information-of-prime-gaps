@@ -2,7 +2,7 @@
 
 This repository contains a paper-facing formulation and reproducible experiments for measuring residual predictive information in consecutive prime gaps.
 
-Archived releases are available through Zenodo via the GitHub release archive. For exact reproducibility, cite the version-specific DOI shown on Zenodo for the GitHub release used.
+Archived releases are available through Zenodo via the GitHub release archive. The current archived release is `v0.1.1` at DOI `10.5281/zenodo.21093144`. For exact reproducibility, cite the version-specific DOI shown on Zenodo for the GitHub release used.
 
 The central statistic is the prequential per-gap code gain
 
@@ -56,10 +56,10 @@ The paper should be framed as a reproducible protocol and finite-scale falsifica
 The repository includes publication/reuse metadata:
 
 - `LICENSE`: MIT license for reuse of the repository contents.
-- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and the intended release version.
+- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and the current archived release DOI.
 - `ARCHIVAL_RELEASE.md`: release-note and archival procedure for DOI-linked versions.
 
-Use the version-specific DOI shown on Zenodo when citing an archived GitHub release. The repository files intentionally avoid embedding a newly minted same-version DOI, which prevents a DOI-only self-reference loop.
+The current `v0.1.1` archived release DOI is `10.5281/zenodo.21093144`. Future release DOIs should be added only on live `main` after Zenodo archival; do not create a new release solely to embed a DOI.
 
 ## Paper-Scale Headline Results
 
