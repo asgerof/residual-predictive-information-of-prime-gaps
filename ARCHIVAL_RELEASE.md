@@ -1,21 +1,10 @@
 # Archival Release Guide
 
-This repository now has an archival release for version `0.1.0`.
-
-Current release metadata:
-
-```text
-Version: v0.1.0
-DOI: 10.5281/zenodo.21073161
-Release date: 2026-06-30
-Author: Asger Othmar Frøhlich
-```
-
-The live citation metadata is stored in `CITATION.cff`, and the manuscript Code and Data Availability section points to the archived DOI. This file is kept as a maintenance guide for future release candidates, follow-up DOI-linked metadata updates, and submission checks.
+This file describes the release and Zenodo archival procedure for this repository. It intentionally avoids hard-coding a same-version Zenodo DOI in the repository files before the final archive is created. Zenodo mints the version-specific DOI after the GitHub release exists, so embedding that DOI back into the same archived snapshot would create an unnecessary DOI-only release loop.
 
 ## Release candidate checklist
 
-Before creating any future archival release or submission update:
+Before creating an archival release or submission update:
 
 1. Confirm the following GitHub Actions workflows are green on the release commit:
    - `Reproducibility`
@@ -25,28 +14,26 @@ Before creating any future archival release or submission update:
 3. Confirm that `experiments/final_report.md` and `experiments/final_metrics.json` regenerate without a diff.
 4. Confirm the paper-scale artifact directories listed in `experiments/final_manifest.json` are present.
 5. Confirm the manuscript claim remains finite-scale and model-class-specific.
-6. Confirm that `CITATION.cff`, the README citation/DOI line, and the manuscript availability statement agree on the DOI, version, and release date.
+6. Confirm that `CITATION.cff`, the README citation guidance, and the manuscript availability statement do not contain a stale version-specific Zenodo DOI.
 
-## Current version tag
+## Intended final release
 
-The repository metadata currently targets version `0.1.0`.
-
-Current release tag:
+Recommended release tag:
 
 ```text
-v0.1.0
+v0.1.1
 ```
 
-Current release title:
+Recommended release title:
 
 ```text
-Residual Predictive Information in Prime Gaps v0.1.0
+Residual Predictive Information in Prime Gaps v0.1.1
 ```
 
 Canonical release-note wording:
 
 ```markdown
-Initial paper-scale release for the residual predictive information of prime gaps study.
+Final paper-scale release for the residual predictive information of prime gaps study.
 
 This release contains:
 
@@ -64,26 +51,16 @@ A prequential residual-coding protocol detects strong missing arithmetic structu
 This is a finite-scale empirical/methodological result. It is not an asymptotic theorem and not a claim that prime gaps contain no residual information.
 ```
 
-## DOI maintenance
+## DOI handling without a loop
 
-For a future release, create the GitHub release first and archive it with Zenodo or another DOI provider. Once the DOI exists:
+For the final release:
 
-1. Update `CITATION.cff`, for example:
+1. Create the GitHub release from the final checked commit.
+2. Let Zenodo archive that GitHub release and mint the version-specific DOI.
+3. Use the DOI shown on the Zenodo record and GitHub release page when citing that archived version.
+4. Do not create another release only to embed the newly minted DOI back into the same repository files.
 
-   ```yaml
-   doi: "10.xxxx/zenodo.xxxxxxx"
-   ```
-
-2. Update the version and release date if needed:
-
-   ```yaml
-   version: "0.1.1"
-   date-released: "YYYY-MM-DD"
-   ```
-
-3. Update the README DOI/citation line.
-4. Update the manuscript Code and Data Availability section if the archived DOI changes.
-5. Commit those changes and, if needed, create a follow-up tag for the DOI-linked metadata update.
+A later repository edit may mention the DOI on `main`, but that is live repository metadata. It is not necessary to create a new archive unless scientific content, manuscript text, figures, code, or pinned artifacts change.
 
 ## What cannot be inferred from the release
 
