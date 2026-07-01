@@ -39,6 +39,25 @@ jobs:
       - name: Check paper.pdf exists
         run: test -s paper.pdf
 
+      - name: Create clean arXiv source zip
+        run: |
+          set -euo pipefail
+          mkdir -p arxiv-source/paper_figures
+          cp paper.tex references.bib arxiv-source/
+          if [ -f paper.bbl ]; then cp paper.bbl arxiv-source/; fi
+          cp paper_figures/figure_1_b1_residual_stop_time.pdf arxiv-source/paper_figures/
+          cp paper_figures/figure_2_ctw_positive_control.pdf arxiv-source/paper_figures/
+          cp paper_figures/figure_3_baseline_ladder_bits.pdf arxiv-source/paper_figures/
+          (cd arxiv-source && zip -r ../arxiv-source.zip .)
+          unzip -l arxiv-source.zip
+
+      - name: Upload arXiv source bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: arxiv-source
+          path: arxiv-source.zip
+          if-no-files-found: error
+
       - name: Upload paper.pdf artifact
         uses: actions/upload-artifact@v4
         with:
