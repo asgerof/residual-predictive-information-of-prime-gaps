@@ -5,9 +5,8 @@ authors:
   - family-names: "Frøhlich"
     given-names: "Asger Othmar"
 repository-code: "https://github.com/asgerof/residual-predictive-information-of-prime-gaps"
-doi: "10.5281/zenodo.21073161"
-date-released: "2026-06-30"
-version: "0.1.0"
+date-released: "2026-07-01"
+version: "0.1.1"
 license: "MIT"
 keywords:
   - prime gaps
