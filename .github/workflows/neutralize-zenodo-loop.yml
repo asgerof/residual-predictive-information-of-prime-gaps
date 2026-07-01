@@ -14,58 +14,38 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Patch DOI/version-specific repository text
+      - name: Patch repository text
         run: |
           python - <<'PY'
           from pathlib import Path
 
-          # CITATION.cff: keep citation metadata, but avoid embedding a DOI that
-          # Zenodo mints only after the archive is created.
-          citation = Path('CITATION.cff')
-          text = citation.read_text(encoding='utf-8')
-          text = text.replace('doi: "10.5281/zenodo.21073161"\n', '')
-          text = text.replace('date-released: "2026-06-30"', 'date-released: "2026-07-01"')
-          text = text.replace('version: "0.1.0"', 'version: "0.1.1"')
-          citation.write_text(text, encoding='utf-8')
+          def rw(path, fn):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              p.write_text(fn(text), encoding='utf-8')
 
-          # README: avoid hard-coded version DOI/current-release statement.
-          readme = Path('README.md')
-          text = readme.read_text(encoding='utf-8')
-          text = text.replace(
-              'Archived release: `v0.1.0`, DOI `10.5281/zenodo.21073161`.\n',
-              'Archived releases are available through Zenodo via the GitHub release archive. For exact reproducibility, cite the version-specific DOI shown on Zenodo for the GitHub release used.\n'
-          )
-          text = text.replace(
-              '- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich, version\n  `0.1.0`, release date `2026-06-30`, and DOI `10.5281/zenodo.21073161`.\n- `ARCHIVAL_RELEASE.md`: release-note and DOI maintenance procedure for future\n  versions.\n\nUse the DOI-linked release when citing the archived repository record.\n',
-              '- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and the intended release version.\n- `ARCHIVAL_RELEASE.md`: release-note and archival procedure for DOI-linked versions.\n\nUse the version-specific DOI shown on Zenodo when citing an archived GitHub release. The repository files intentionally avoid embedding a newly minted same-version DOI, which prevents a DOI-only self-reference loop.\n'
-          )
-          readme.write_text(text, encoding='utf-8')
+          rw('CITATION.cff', lambda s: s
+             .replace('doi: "10.5281/zenodo.21073161"\n', '')
+             .replace('date-released: "2026-06-30"', 'date-released: "2026-07-01"')
+             .replace('version: "0.1.0"', 'version: "0.1.1"'))
 
-          # Manuscript availability statement: point to GitHub and the release DOI
-          # shown on Zenodo, without hard-coding the current same-version DOI.
-          paper = Path('paper.tex')
-          text = paper.read_text(encoding='utf-8')
-          text = text.replace(
+          rw('README.md', lambda s: s
+             .replace('Archived release: `v0.1.0`, DOI `10.5281/zenodo.21073161`.\n',
+                      'Archived releases are available through Zenodo via the GitHub release archive. For exact reproducibility, cite the version-specific DOI shown on Zenodo for the GitHub release used.\n')
+             .replace('- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich, version\n  `0.1.0`, release date `2026-06-30`, and DOI `10.5281/zenodo.21073161`.\n- `ARCHIVAL_RELEASE.md`: release-note and DOI maintenance procedure for future\n  versions.\n\nUse the DOI-linked release when citing the archived repository record.\n',
+                      '- `CITATION.cff`: citation metadata crediting Asger Othmar Frøhlich and the intended release version.\n- `ARCHIVAL_RELEASE.md`: release-note and archival procedure for DOI-linked versions.\n\nUse the version-specific DOI shown on Zenodo when citing an archived GitHub release. The repository files intentionally avoid embedding a newly minted same-version DOI, which prevents a DOI-only self-reference loop.\n'))
+
+          rw('paper.tex', lambda s: s.replace(
               'The code, manuscript sources, pinned paper-scale artifacts, generated figures, validation scripts, final metrics, and reproducibility workflows are available in the repository \\url{https://github.com/asgerof/residual-predictive-information-of-prime-gaps}. The archived release is available at \\url{https://doi.org/10.5281/zenodo.21073161}.',
-              'The code, manuscript sources, pinned paper-scale artifacts, generated figures, validation scripts, final metrics, and reproducibility workflows are available in the repository \\url{https://github.com/asgerof/residual-predictive-information-of-prime-gaps}. Archived releases are available through Zenodo; for exact reproducibility, cite the version-specific DOI shown on Zenodo for the GitHub release used.'
-          )
-          paper.write_text(text, encoding='utf-8')
+              'The code, manuscript sources, pinned paper-scale artifacts, generated figures, validation scripts, final metrics, and reproducibility workflows are available in the repository \\url{https://github.com/asgerof/residual-predictive-information-of-prime-gaps}. Archived releases are available through Zenodo; for exact reproducibility, cite the version-specific DOI shown on Zenodo for the GitHub release used.'))
 
-          # Archival guide: replace the current-release DOI wording with a stable
-          # procedure that explicitly avoids creating a self-reference loop.
-          archival = Path('ARCHIVAL_RELEASE.md')
-          archival.write_text('''# Archival Release Guide
+          Path('ARCHIVAL_RELEASE.md').write_text('''# Archival Release Guide
 
-This file describes the release and Zenodo archival procedure for this repository.
-It intentionally avoids hard-coding a same-version Zenodo DOI in the repository
-files before the final archive is created. Zenodo mints the version-specific DOI
-after the GitHub release exists, so embedding that DOI back into the same archived
-snapshot would create an unnecessary DOI-only release loop.
+This file describes the release and Zenodo archival procedure for this repository. It intentionally avoids hard-coding a same-version Zenodo DOI in the repository files before the final archive is created. Zenodo mints the version-specific DOI after the GitHub release exists, so embedding that DOI back into the same archived snapshot would create an unnecessary DOI-only release loop.
 
 ## Release candidate checklist
 
@@ -142,12 +122,10 @@ Preserve the following limitations in any release notes, preprint upload, or sub
       - name: Remove one-time workflow
         run: git rm .github/workflows/neutralize-zenodo-loop.yml
 
-      - name: Commit metadata-loop cleanup
+      - name: Commit cleanup
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git diff --cached -- .github/workflows/neutralize-zenodo-loop.yml || true
-          git diff -- README.md CITATION.cff ARCHIVAL_RELEASE.md paper.tex || true
-          git add README.md CITATION.cff ARCHIVAL_RELEASE.md paper.tex
+          git add README.md CITATION.cff ARCHIVAL_RELEASE.md paper.tex .github/workflows/neutralize-zenodo-loop.yml
           git commit -m "Avoid Zenodo DOI self-reference loop" || exit 0
           git push
