@@ -16,6 +16,17 @@ Before creating an archival release or submission update:
 5. Confirm the manuscript claim remains finite-scale and model-class-specific.
 6. Confirm that `CITATION.cff`, the README citation guidance, and the manuscript availability statement do not contain a stale version-specific Zenodo DOI.
 
+## Release metadata convention
+
+Keep release metadata split by whether it is known before or after the GitHub archive is created:
+
+- Pre-release fields that are known before tagging, such as version, release date, author, repository URL, and the generic Zenodo availability statement, may be maintained directly in `CITATION.cff`, `README.md`, `paper.tex`, and the release notes.
+- The version-specific Zenodo DOI is not known until after the GitHub release has been archived. Do not embed a future same-version DOI in the source snapshot.
+- After Zenodo mints the DOI, cite the DOI shown on the Zenodo record and GitHub release page. A later live-`main` documentation update may mention the DOI, but that metadata-only update should not force another archived release.
+- If scientific content, manuscript text, figures, code, or pinned artifacts change after DOI minting, treat that as a real new release candidate and rerun the checklist above.
+
+This convention keeps the archived source, release asset PDF, citation metadata, and Zenodo record consistent without creating a DOI-only version loop.
+
 ## Intended final release
 
 Recommended release tag:
