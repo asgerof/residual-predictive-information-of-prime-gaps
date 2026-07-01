@@ -1,0 +1,46 @@
+name: Build arXiv source bundle
+
+on:
+  push:
+    branches:
+      - tmp-arxiv-bundle-20260701
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Regenerate manuscript figures
+        run: python experiments/rpi_paper_figures.py
+
+      - name: Build paper and bibliography
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: paper.tex
+          latexmk_shell_escape: false
+
+      - name: Create clean arXiv source zip
+        run: |
+          set -euo pipefail
+          mkdir -p arxiv-source/paper_figures
+          cp paper.tex references.bib arxiv-source/
+          if [ -f paper.bbl ]; then cp paper.bbl arxiv-source/; fi
+          cp paper_figures/figure_1_b1_residual_stop_time.pdf arxiv-source/paper_figures/
+          cp paper_figures/figure_2_ctw_positive_control.pdf arxiv-source/paper_figures/
+          cp paper_figures/figure_3_baseline_ladder_bits.pdf arxiv-source/paper_figures/
+          (cd arxiv-source && zip -r ../arxiv-source.zip .)
+          unzip -l arxiv-source.zip
+
+      - name: Upload arXiv source bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: arxiv-source
+          path: arxiv-source.zip
+          if-no-files-found: error
