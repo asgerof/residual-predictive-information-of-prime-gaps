@@ -1,0 +1,75 @@
+name: Apply bibliography and PDF metadata patch
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-biblio-metadata.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-paper:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch paper.tex
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('paper.tex')
+          text = path.read_text(encoding='utf-8')
+
+          old_hypersetup = '''\\hypersetup{
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=blue,
+            urlcolor=blue
+          }'''
+          new_hypersetup = '''\\hypersetup{
+            pdftitle={Residual Predictive Information in Prime Gaps},
+            pdfauthor={Asger Othmar Fr\\o hlich},
+            pdfsubject={Prequential residual-coding protocol for consecutive prime gaps},
+            pdfkeywords={prime gaps, prequential prediction, residual predictive information, arithmetic null models, universal coding, minimum description length},
+            colorlinks=true,
+            linkcolor=blue,
+            citecolor=blue,
+            urlcolor=blue
+          }'''
+          text = text.replace(old_hypersetup, new_hypersetup)
+
+          text = text.replace(
+              '\\citep{cramer1936,banksetal2023,lemkeoliver2016}',
+              '\\citep{cramer1936,hardylittlewood1923,maier1985,montgomerysoundararajan2004,banksetal2023,lemkeoliver2016}',
+          )
+          text = text.replace(
+              'prequential code length \\citep{dawid1984}',
+              'prequential code length \\citep{dawid1984,barronrissanenyu1998,grunwald2019}',
+          )
+          text = text.replace(
+              'Hardy--Littlewood heuristics predict correction by the singular series',
+              'Hardy--Littlewood heuristics predict correction by the singular series \\citep{hardylittlewood1923}',
+          )
+          text = text.replace(
+              'Krichevsky--Trofimov-smoothed finite-depth Markov predictor on previous buckets \\citep{rissanen1984}',
+              'Krichevsky--Trofimov-smoothed finite-depth Markov predictor on previous buckets \\citep{krichevskytrofimov1981,rissanen1984}',
+          )
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit patch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git diff -- paper.tex
+          git add paper.tex
+          git commit -m "Add PDF metadata and cite expanded bibliography" || exit 0
+          git push
