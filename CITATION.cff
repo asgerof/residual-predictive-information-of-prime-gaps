@@ -7,6 +7,7 @@ authors:
 repository-code: "https://github.com/asgerof/residual-predictive-information-of-prime-gaps"
 date-released: "2026-07-01"
 version: "0.1.1"
+doi: "10.5281/zenodo.21093144"
 license: "MIT"
 keywords:
   - prime gaps
